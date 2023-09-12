@@ -40,17 +40,29 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
-            "AutoMapper": {
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
-              "version": "[12.0.1, )"
+              "version": "[11.0.0, )"
+            },
+            "Autofac": {
+              "target": "Package",
+              "version": "[7.1.0, )"
             },
             "MediatR": {
               "target": "Package",
-              "version": "[12.1.1, )"
+              "version": "[11.1.0, )"
+            },
+            "MediatR.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[11.1.0, )"
             },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.10, )"
+            },
+            "Microsoft.Build.Utilities.Core": {
+              "target": "Package",
+              "version": "[17.7.2, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
@@ -65,6 +77,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[7.0.10, )"
+            },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[7.0.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

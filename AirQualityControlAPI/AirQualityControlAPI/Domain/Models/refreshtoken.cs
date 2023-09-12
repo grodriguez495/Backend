@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace AirQualityControlAPI.Domain.Models;
 
-public partial class refreshtoken
+public partial class Refreshtoken
 {
-    public int user_id { get; set; }
+    public int User_id { get; set; }
 
-    public int token_id { get; set; }
+    public int Token_id { get; set; }
 
-    public string refresh_token { get; set; } = null!;
+    public string Refresh_token { get; set; } = null!;
 }

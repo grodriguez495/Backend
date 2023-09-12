@@ -8,15 +8,27 @@ namespace AirQualityControlAPI.Application.Features.Roles
     {
         private readonly IRoleQueryRepository _roleQueryRepository;
         private readonly IMapper _mapper;
-        public GetRoleQueryHandler(IRoleQueryRepository repository, IMapper mapper) 
-        {
-            _mapper = mapper;
-            _roleQueryRepository = repository;
 
-        }    
-        public Task<List<RoleDto>> Handle(GetRoleQuery request, CancellationToken cancellationToken)
+        public GetRoleQueryHandler(IRoleQueryRepository repository, IMapper mapper)
         {
-            throw new NotImplementedException();
+
+            _roleQueryRepository = repository;
+            _mapper = mapper;
+
+        }
+        public async Task<List<RoleDto>> Handle(GetRoleQuery request, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var entities = await _roleQueryRepository.ListAsync(cancellationToken: cancellationToken);
+                var result = _mapper.Map<List<RoleDto>>(entities);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return new List<RoleDto>();
+            }
         }
     }
 }

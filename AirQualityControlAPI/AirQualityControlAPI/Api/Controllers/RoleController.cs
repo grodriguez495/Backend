@@ -4,23 +4,34 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
 
 namespace AirQualityControlAPI.Api.Controllers
 {
     public class RoleController : BaseController
     {
-
-        public RoleController() 
+      
+        public RoleController(IMediator mediator) :base(mediator)
         {
+            _mediator = mediator;
         }
 
-        
         [HttpGet("list")]
-        public async Task<ActionResult<List<RoleDto>>> ListAsync() => await Mediator.Send(new GetRoleQuery());
-            
+        public async Task<ActionResult<List<RoleDto>>> ListAsync()
+        {
+            try
+            {
+               return await _mediator.Send(new GetRoleQuery());
 
-        
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        } 
+
+        /*
         [HttpGet("{id}")]
         public string Get(int id)
         {
@@ -43,6 +54,6 @@ namespace AirQualityControlAPI.Api.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-        }
+        }*/
     }
 }

@@ -1,6 +1,6 @@
 ﻿using MediatR;
+
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace AirQualityControlAPI.Api.Controllers
 {
@@ -8,7 +8,10 @@ namespace AirQualityControlAPI.Api.Controllers
     [Route("api/[controller]")]
     public abstract class BaseController : ControllerBase
     {
-        private ISender _mediator;
-        protected ISender Mediator => _mediator ??= HttpContext.RequestServices.GetService<ISender>();
+        public IMediator _mediator;
+        public BaseController(IMediator sender) 
+        {
+            _mediator = sender;
+        }
     }
 }

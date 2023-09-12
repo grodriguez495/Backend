@@ -2,7 +2,7 @@
 
 namespace AirQualityControlAPI.Domain.Repositories.Roles
 {
-    public interface IRoleQueryRepository : IQueryRepository<role,int>
+    public interface IRoleQueryRepository : IQueryRepository<Role,int>
     {
     }
 }
