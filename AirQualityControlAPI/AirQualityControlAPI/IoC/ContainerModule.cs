@@ -6,16 +6,19 @@ using System.Reflection;
 
 namespace AirQualityControlAPI.IoC
 {
-    public class ContainerModule: Autofac.Module
+    public class ContainerModule : Autofac.Module
     {
         [ExcludeFromCodeCoverage]
         protected override void Load(ContainerBuilder builder)
         {
-            //base.Load(builder);
-
-           /* var applicationAssembly = ApplicationAssemblyFinder.GetAssembly();
+            base.Load(builder);
+            builder.RegisterAppAdapters();
+            builder.RegisterPersistence();
+            var applicationAssembly = ApplicationAssemblyFinder.GetAssembly();
             builder.RegisterMediatR(applicationAssembly);
-            */builder.RegisterAppAdapters();
+            var persistenceAssembly = PersistenceAssemblyFinder.GetAssembly();
+            builder.RegisterAutoMapper(persistenceAssembly);
+            builder.RegisterConfigs();
         }
     }
 }

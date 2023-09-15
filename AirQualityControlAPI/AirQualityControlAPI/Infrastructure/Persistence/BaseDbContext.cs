@@ -7,15 +7,19 @@ namespace AirQualityControlAPI.Infrastructure.Persistence
 {
     public abstract class BaseDbContext : DbContext, IBaseDbContext
     {
-        protected readonly DateTimeOffset _datetime;
-
-        public BaseDbContext(DbContextOptions dbContextOptions): base(dbContextOptions)
+        public BaseDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
-           
+
         }
-        public  Task<int> SaveEntitiesAsync(CancellationToken cancellationToken)
+
+        public async Task<int> SaveEntitiesAsync(CancellationToken cancellationToken)
         {
             BaseDbContext baseDbContext = this;
+            bool hasChanges = baseDbContext.ChangeTracker.HasChanges();
+            
+            if (!hasChanges)
+                return 0;
+            
             foreach (EntityEntry<IAuditableEntity> entry in baseDbContext.ChangeTracker.Entries<IAuditableEntity>())
             {
 
@@ -25,15 +29,14 @@ namespace AirQualityControlAPI.Infrastructure.Persistence
                         entry.Entity.LastUpdated = DateTime.UtcNow;
                         continue;
                     case EntityState.Added:
-
                         entry.Entity.Created = DateTime.UtcNow;
                         continue;
                     default:
                         continue;
                 }
             }
-            return Task.FromResult(1);
-            
+
+            return await baseDbContext.SaveChangesAsync(cancellationToken);
         }
     }
 }

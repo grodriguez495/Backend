@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 namespace AirQualityControlAPI.Infrastructure.Repositories
 {
     public abstract class BaseRepository<TEntity, TKey, TDBContext> :
-        ICommandRepository<TEntity, TKey>, IExtendedQueryRepository<TEntity, TKey>
+        ICreateCommandRepository<TEntity, TKey>, IExtendedQueryRepository<TEntity, TKey>
         where TEntity : BaseEntity<TKey>
         where TDBContext : IBaseDbContext
     {
@@ -66,6 +66,7 @@ namespace AirQualityControlAPI.Infrastructure.Repositories
 
         public async Task<bool> RegisterAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
+            //return await this.TrySaveEntitiesAsync(cancellationToken);
             return await this.ExecuteWithTransactionAsync(async () => await this.ExecuteAddAsync(entity),
                 cancellationToken);
         }
@@ -109,7 +110,7 @@ namespace AirQualityControlAPI.Infrastructure.Repositories
             return trackedEntity.State == EntityState.Modified;
         }
 
-        public async Task<bool> UnregisterAsync(TEntity entity, CancellationToken cancellationToken = default)
+        public async Task<bool> DeleteAsync(TEntity entity, CancellationToken cancellationToken = default)
         {
             return await this.ExecuteWithTransactionAsync(() => this.ExecuteRemove(entity),cancellationToken);
         }

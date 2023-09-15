@@ -1,39 +1,17 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-//using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
+﻿//using Microsoft.AspNetCore.Authentication.JwtBearer;
+
+using System.Reflection;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Primitives;
-using System.IO;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.AspNetCore.Http;
-using AirQualityControlAPI.Domain.Models;
 using AirQualityControlAPI.Infrastructure;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Autofac;
 using AirQualityControlAPI.IoC;
-using AirQualityControlAPI.Application.Reflection;
-using System.Reflection;
+using MediatR;
 
 namespace AirQualityControlAPI
 {
-
-
     public class Startup
     {
-       
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -49,10 +27,34 @@ namespace AirQualityControlAPI
             services.AddApplication();
             services.AddInfrastructure(Configuration);
             services.AddHttpContextAccessor();
-          
-            services.AddDbContext<AirQualityControlDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("constring")));
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddOptions();
+            
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("api", new OpenApiInfo()
+                {
+                    Description = "AirQualityControl API with curd operations",
+                    Title = "AirQualityControl",
+                    Version = "1"
+                });
+            });
 
-              var _dbcontext = services.BuildServiceProvider().GetService<AirQualityControlDbContext>();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder
+                    .WithOrigins("http://localhost:4200", "http://localhost:82")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+            #region codigo comentado
+
+            /* services.AddDbContext<AirQualityControlDbContext>(options =>
+                options.UseSqlServer(connectionString));*/
+           
+            //var _dbcontext = services.BuildServiceProvider().GetService<AirQualityControlDbContext>();
 
            
 
@@ -83,33 +85,14 @@ namespace AirQualityControlAPI
                  };
              });*/
 
-            services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("api", new OpenApiInfo()
-                {
-                    Description = "AirQualityControl API with curd operations",
-                    Title = "AirQualityControl",
-                    Version = "1"
-                });
-            });
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy",
-                    builder => builder
-                    .WithOrigins("http://localhost:4200", "http://localhost:82")
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials());
-            });
-
-
+            #endregion
         }
 
-       /* public void ConfigureContainer(ContainerBuilder builder) 
+        public void ConfigureContainer(ContainerBuilder builder) 
         {
-            //builder.RegisterModule(new ContainerModule());
-        }*/
+            builder.RegisterModule(new ContainerModule());
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -123,13 +106,6 @@ namespace AirQualityControlAPI
             app.UseCors("CorsPolicy");
 
             app.UseStaticFiles();
-           /* app.UseStaticFiles(new StaticFileOptions()
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Uploads")),
-                RequestPath = new PathString("/Uploads")
-            });*/
-
-          //  app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -139,8 +115,7 @@ namespace AirQualityControlAPI
 
             app.UseSwagger();
 
-            //  string StringValues=string.Empty;
-
+        
             app.UseExceptionHandler(errorApp =>
             {
                 errorApp.Run(async context =>
@@ -155,10 +130,7 @@ namespace AirQualityControlAPI
 
             app.UseSwaggerUI(options => options.SwaggerEndpoint("api/swagger.json", "AirQualityControl"));
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 

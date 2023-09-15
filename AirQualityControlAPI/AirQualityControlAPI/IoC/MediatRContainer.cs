@@ -14,8 +14,7 @@ namespace AirQualityControlAPI.IoC
             builder.RegisterAssemblyTypes(typeof(IMediator).Assembly)
                 .AsImplementedInterfaces()
                 .InstancePerDependency();
-
-
+            
             builder.RegisterAssemblyTypes(assembliesToScan)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>))
                 .InstancePerDependency() ;
@@ -23,8 +22,7 @@ namespace AirQualityControlAPI.IoC
            builder.RegisterAssemblyTypes(assembliesToScan)
                 .AsClosedTypesOf(typeof(INotificationHandler<>))
                 .InstancePerDependency() ;
-        
-         
+           
         }
     }
 }

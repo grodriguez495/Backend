@@ -1,4 +1,9 @@
 ﻿using AirQualityControlAPI.Application.Features.Roles;
+using AirQualityControlAPI.Application.Features.Roles.Commands.CreateRoles;
+using AirQualityControlAPI.Application.Features.Roles.Commands.DeleteRoles;
+using AirQualityControlAPI.Application.Features.Roles.Commands.UpdateRole;
+using AirQualityControlAPI.Application.Features.Roles.Queries.GetRole;
+using AirQualityControlAPI.Application.Features.Roles.Queries.GetRoles;
 using AirQualityControlAPI.Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -10,8 +15,8 @@ namespace AirQualityControlAPI.Api.Controllers
 {
     public class RoleController : BaseController
     {
-      
-        public RoleController(IMediator mediator) :base(mediator)
+
+        public RoleController(IMediator mediator) : base(mediator)
         {
             _mediator = mediator;
         }
@@ -21,39 +26,55 @@ namespace AirQualityControlAPI.Api.Controllers
         {
             try
             {
-               return await _mediator.Send(new GetRoleQuery());
+                return await _mediator.Send(new GetRolesQuery());
 
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                return null;
+                return new List<RoleDto>();
             }
-        } 
-
-        /*
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
         }
 
-       
+
+        [HttpGet("{id:required}")]
+        public async Task<ActionResult<RoleDto>> GetRoleAsync(int id)
+        {
+            try
+            {
+                return await _mediator.Send(new GetRoleQuery(id));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return new RoleDto();
+            }
+        }
+
+
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult<bool>> CreateRoleAsync(CreateRoleCommand command) =>
+            await _mediator.Send(command);
+
+
+        [HttpPut("{id:required}")]
+        public async Task<ActionResult<RoleDto>> UpdateRoleAsync(int id, UpdateRoleCommand command)
         {
+            try
+            {
+                command.RoleId = id;
+                return await _mediator.Send(command);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return new RoleDto();
+            }
         }
 
-        
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
 
-       
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }*/
+        [HttpDelete("{id:required}")]
+        public async Task<ActionResult<bool>> Delete(int id) =>
+            await _mediator.Send(new DeleteRoleCommand { Id = id });
     }
 }

@@ -8,13 +8,12 @@ namespace AirQualityControlAPI.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Role> builder)
         {
-            _ = builder.ToTable("role", "AirQualityControl")
+            _ = builder.ToTable("role", "dbo")
                   .HasKey(role => role.RoleId);
 
             _ = builder
                 .Property(role => role.RoleId)
-                .HasColumnName("role_id")
-                .IsRequired();
+                .HasColumnName("role_id");
             _ = builder
                 .Property(role => role.Name)
                 .HasColumnName("name")

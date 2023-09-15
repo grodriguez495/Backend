@@ -18,6 +18,23 @@
           }
         }
       },
+      "Autofac.Extensions.DependencyInjection/8.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Autofac": "6.4.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Autofac.Extensions.DependencyInjection.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Autofac.Extensions.DependencyInjection.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "AutoMapper/11.0.0": {
         "type": "package",
         "dependencies": {
@@ -1464,6 +1481,26 @@
         "lib/netstandard2.0/Autofac.xml",
         "lib/netstandard2.1/Autofac.dll",
         "lib/netstandard2.1/Autofac.xml"
+      ]
+    },
+    "Autofac.Extensions.DependencyInjection/8.0.0": {
+      "sha512": "nGrXNpQX2FiZpIBydK9cxZnnoqP/cUd3k/53uRERYEqLtWzKtE15R6L+j5q5ax5Rv/+3wAIkOaPePkahfqrwjg==",
+      "type": "package",
+      "path": "autofac.extensions.dependencyinjection/8.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "autofac.extensions.dependencyinjection.8.0.0.nupkg.sha512",
+        "autofac.extensions.dependencyinjection.nuspec",
+        "icon.png",
+        "lib/net5.0/Autofac.Extensions.DependencyInjection.dll",
+        "lib/net5.0/Autofac.Extensions.DependencyInjection.xml",
+        "lib/net6.0/Autofac.Extensions.DependencyInjection.dll",
+        "lib/net6.0/Autofac.Extensions.DependencyInjection.xml",
+        "lib/netstandard2.0/Autofac.Extensions.DependencyInjection.dll",
+        "lib/netstandard2.0/Autofac.Extensions.DependencyInjection.xml",
+        "lib/netstandard2.1/Autofac.Extensions.DependencyInjection.dll",
+        "lib/netstandard2.1/Autofac.Extensions.DependencyInjection.xml"
       ]
     },
     "AutoMapper/11.0.0": {
@@ -4357,6 +4394,7 @@
     "net7.0": [
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 11.0.0",
       "Autofac >= 7.1.0",
+      "Autofac.Extensions.DependencyInjection >= 8.0.0",
       "MediatR >= 11.1.0",
       "MediatR.Extensions.Microsoft.DependencyInjection >= 11.1.0",
       "Microsoft.AspNetCore.OpenApi >= 7.0.10",
@@ -4374,21 +4412,19 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Tavo maestria\\Repo\\Backend\\AirQualityControlAPI\\AirQualityControlAPI\\AirQualityControlAPI.csproj",
+      "projectUniqueName": "C:\\Users\\Gustavo\\RiderProjects\\Backend\\AirQualityControlAPI\\AirQualityControlAPI\\AirQualityControlAPI.csproj",
       "projectName": "AirQualityControlAPI",
-      "projectPath": "D:\\Tavo maestria\\Repo\\Backend\\AirQualityControlAPI\\AirQualityControlAPI\\AirQualityControlAPI.csproj",
+      "projectPath": "C:\\Users\\Gustavo\\RiderProjects\\Backend\\AirQualityControlAPI\\AirQualityControlAPI\\AirQualityControlAPI.csproj",
       "packagesPath": "C:\\Users\\Gustavo\\.nuget\\packages\\",
-      "outputPath": "D:\\Tavo maestria\\Repo\\Backend\\AirQualityControlAPI\\AirQualityControlAPI\\obj\\",
+      "outputPath": "C:\\Users\\Gustavo\\RiderProjects\\Backend\\AirQualityControlAPI\\AirQualityControlAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Gustavo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\Gustavo\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -4414,6 +4450,10 @@
           "Autofac": {
             "target": "Package",
             "version": "[7.1.0, )"
+          },
+          "Autofac.Extensions.DependencyInjection": {
+            "target": "Package",
+            "version": "[8.0.0, )"
           },
           "MediatR": {
             "target": "Package",
@@ -4473,7 +4513,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
       }
     }
   }

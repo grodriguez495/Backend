@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "s8U2HOjHmAeHO8rXd98vbJyEV6mfQlYYq5P+QUneXvngV2yFjzATLByPy0Wz/cXWdGUUNb2vlSIf+/jQ7zA/rA==",
+  "dgSpecHash": "A4BZC4OjRwEmVRhRIpVkpEjQfqumy5mpBQdzKZhfhRlQePxt92kQHDdlGw61Wz7GOn95nNMiM47PXmlNMYTwxQ==",
   "success": true,
-  "projectFilePath": "D:\\Tavo maestria\\Repo\\Backend\\AirQualityControlAPI\\AirQualityControlAPI\\AirQualityControlAPI.csproj",
+  "projectFilePath": "C:\\Users\\Gustavo\\RiderProjects\\Backend\\AirQualityControlAPI\\AirQualityControlAPI\\AirQualityControlAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Gustavo\\.nuget\\packages\\autofac\\7.1.0\\autofac.7.1.0.nupkg.sha512",
+    "C:\\Users\\Gustavo\\.nuget\\packages\\autofac.extensions.dependencyinjection\\8.0.0\\autofac.extensions.dependencyinjection.8.0.0.nupkg.sha512",
     "C:\\Users\\Gustavo\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
     "C:\\Users\\Gustavo\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
     "C:\\Users\\Gustavo\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",

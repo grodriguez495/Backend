@@ -1,10 +1,11 @@
 ﻿using AirQualityControlAPI.Domain.Repositories.Roles;
+using AirQualityControlAPI.Domain.Repositories.Roles.Queries;
 using AutoMapper;
 using MediatR;
 
-namespace AirQualityControlAPI.Application.Features.Roles
+namespace AirQualityControlAPI.Application.Features.Roles.Queries.GetRoles
 {
-    public class GetRoleQueryHandler : IRequestHandler<GetRoleQuery, List<RoleDto>>
+    public class GetRoleQueryHandler : IRequestHandler<GetRolesQuery, List<RoleDto>>
     {
         private readonly IRoleQueryRepository _roleQueryRepository;
         private readonly IMapper _mapper;
@@ -16,10 +17,12 @@ namespace AirQualityControlAPI.Application.Features.Roles
             _mapper = mapper;
 
         }
-        public async Task<List<RoleDto>> Handle(GetRoleQuery request, CancellationToken cancellationToken)
+        public async Task<List<RoleDto>> Handle(GetRolesQuery request, CancellationToken cancellationToken)
         {
             try
             {
+               
+               
                 var entities = await _roleQueryRepository.ListAsync(cancellationToken: cancellationToken);
                 var result = _mapper.Map<List<RoleDto>>(entities);
                 return result;
