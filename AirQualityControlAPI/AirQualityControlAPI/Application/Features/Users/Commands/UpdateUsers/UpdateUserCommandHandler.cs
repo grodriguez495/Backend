@@ -1,4 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Security.Cryptography;
+using System.Text;
+using System.Text.Json.Serialization;
 using AirQualityControlAPI.Domain.Models;
 using AirQualityControlAPI.Domain.Repositories.Users.Commands;
 using AirQualityControlAPI.Domain.Repositories.Users.Queries;
@@ -39,11 +41,22 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand,UserDt
     private User UpdateRecords(User currentUser, UpdateUserCommand request)
     {
         currentUser.Name = request.Name;
-        currentUser.Password = request.Password;
+        currentUser.Password = UpdateMD5(request.Password);
         currentUser.RoleId = request.RoleId;
         currentUser.Email = request.Email;
         currentUser.Phone = request.Phone;
         currentUser.IsActive = request.IsActive;
         return currentUser;
+    }
+
+    private string UpdateMD5(string requestPassword)
+    {
+        var hash = string.Empty;
+        using var md5Hash = MD5.Create();
+        var sourceBytes = Encoding.UTF8.GetBytes(requestPassword);
+        var hashBytes = md5Hash.ComputeHash(sourceBytes);
+        hash = BitConverter.ToString(hashBytes).Replace("-", string.Empty);
+
+        return hash;
     }
 }

@@ -1,4 +1,6 @@
-﻿using AirQualityControlAPI.Domain.Models;
+﻿using System.Security.Cryptography;
+using System.Text;
+using AirQualityControlAPI.Domain.Models;
 using AirQualityControlAPI.Domain.Repositories.Users.Commands;
 using MediatR;
 
@@ -16,7 +18,15 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand,bool>
     {
         try
         {
-            var entity = User.NewUser(request.Name, request.Password, request.Email, request.RoleId, true,
+            var hash = string.Empty;
+            using (var md5Hash = MD5.Create())
+            {
+                var sourceBytes = Encoding.UTF8.GetBytes(request.Password);
+                var hashBytes = md5Hash.ComputeHash(sourceBytes);
+                 hash = BitConverter.ToString(hashBytes).Replace("-", string.Empty);
+            }
+            
+            var entity = User.NewUser(request.Name, hash, request.Email, request.RoleId, true,
                 request.Phone);
 
             var entityCreated = await _userCommandRepository.RegisterAsync(entity, cancellationToken);
