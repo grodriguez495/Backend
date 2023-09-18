@@ -7,9 +7,12 @@ namespace AirQualityControlAPI.Application.Features.Roles
     public class RoleDto 
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
-        public RoleDto() { }
+        public RoleDto()
+        {
+        }
+
         public RoleDto(int id, string name)
         {
             Id = id;

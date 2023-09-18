@@ -7,5 +7,6 @@ namespace AirQualityControlAPI.Infrastructure.Persistence.Contexts
     public interface IAirQualityControlDbContext : IBaseDbContext
     {
         DbSet<Role> Role { get; }
+        DbSet<User> User { get; }
     }
 }

@@ -10,6 +10,6 @@ namespace AirQualityControlAPI.Domain.Repositories
         Task<TEntity> FindAsync(IQueryable<TEntity> query, Expression<Func<TEntity, bool>> predicate, bool isTrackingEntities = false, CancellationToken cancellationToken = default);
 
         Task<IEnumerable<TEntity>> ListAsync(IQueryable<TEntity> query,
-            Expression<Func<TEntity, bool>> predicate = null, bool isTrackingEntities = false, CancellationToken cancellationToken = default);
+            Expression<Func<TEntity, bool>>? predicate = null, bool isTrackingEntities = false, CancellationToken cancellationToken = default);
     }
 }

@@ -15,6 +15,7 @@ public class AirQualityControlDbContext : BaseDbContext, IAirQualityControlDbCon
     }
 
     public virtual DbSet<Role> Role {get;set;}
+    public virtual DbSet<User> User { get; set; }
 
     public bool ModelCreated { get; set;}
 

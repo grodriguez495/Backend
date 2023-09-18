@@ -28,7 +28,7 @@ public class GetRoleQueryHandler : IRequestHandler<GetRoleQuery, RoleDto>
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw;
+            return new RoleDto();
         }
     }
 }

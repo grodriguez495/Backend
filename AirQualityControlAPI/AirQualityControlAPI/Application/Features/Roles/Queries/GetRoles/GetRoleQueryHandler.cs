@@ -13,16 +13,14 @@ namespace AirQualityControlAPI.Application.Features.Roles.Queries.GetRoles
         public GetRoleQueryHandler(IRoleQueryRepository repository, IMapper mapper)
         {
 
-            _roleQueryRepository = repository;
-            _mapper = mapper;
+            _roleQueryRepository = repository ?? throw new ArgumentNullException(nameof(repository));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 
         }
         public async Task<List<RoleDto>> Handle(GetRolesQuery request, CancellationToken cancellationToken)
         {
             try
             {
-               
-               
                 var entities = await _roleQueryRepository.ListAsync(cancellationToken: cancellationToken);
                 var result = _mapper.Map<List<RoleDto>>(entities);
                 return result;

@@ -10,7 +10,7 @@ namespace AirQualityControlAPI.Infrastructure.Persistence.Configurations
         {
             _ = builder.ToTable("role", "dbo")
                   .HasKey(role => role.RoleId);
-
+            
             _ = builder
                 .Property(role => role.RoleId)
                 .HasColumnName("role_id");

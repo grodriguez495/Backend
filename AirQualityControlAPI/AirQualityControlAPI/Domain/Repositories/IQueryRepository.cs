@@ -6,7 +6,7 @@ namespace AirQualityControlAPI.Domain.Repositories
     {
         Task<T> FindAsync(TKey key, bool isTrackingEntity = false, CancellationToken cancellationToken = default(CancellationToken));
         Task<IEnumerable<T>> ListAsync(
-            Expression<Func<T,bool>> Predicate = null,
+            Expression<Func<T, bool>>? Predicate = null,
             bool isTrackingEntity= false,
             CancellationToken cancellationToken = default(CancellationToken));
     }

@@ -39,7 +39,7 @@ namespace AirQualityControlAPI.Infrastructure.Repositories
         }
 
         public virtual async Task<IEnumerable<TEntity>> ListAsync(
-        Expression<Func<TEntity, bool>> predicate = null,
+        Expression<Func<TEntity, bool>>? predicate = null,
         bool isTrackingEntities = false,
         CancellationToken cancellationToken = default)
         {
@@ -48,7 +48,7 @@ namespace AirQualityControlAPI.Infrastructure.Repositories
         }
 
         public virtual async Task<IEnumerable<TEntity>> ListAsync(
-            IQueryable<TEntity> query, Expression<Func<TEntity, bool>> predicate = null, bool isTrackingEntities = false, CancellationToken cancellationToken = default)
+            IQueryable<TEntity> query, Expression<Func<TEntity, bool>>? predicate = null, bool isTrackingEntities = false, CancellationToken cancellationToken = default)
         {
            var result = await ExecuteListAsync(query,predicate,isTrackingEntities,cancellationToken);
             return result;  
@@ -122,7 +122,7 @@ namespace AirQualityControlAPI.Infrastructure.Repositories
         }
 
         public async Task<List<TEntity>> ExecuteListAsync(IQueryable<TEntity> query,
-          Expression<Func<TEntity, bool>> predicate, bool isTrackingEntities, CancellationToken cancellationToken)
+          Expression<Func<TEntity, bool>>? predicate, bool isTrackingEntities, CancellationToken cancellationToken)
         {
             if (predicate != null)
                 query = query.Where(predicate);

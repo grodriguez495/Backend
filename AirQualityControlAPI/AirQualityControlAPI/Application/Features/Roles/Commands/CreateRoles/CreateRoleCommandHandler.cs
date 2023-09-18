@@ -23,7 +23,7 @@ public class CreateRoleCommandHandler:IRequestHandler<CreateRoleCommand,bool>
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw;
+            return false;
         }
     }
 }
