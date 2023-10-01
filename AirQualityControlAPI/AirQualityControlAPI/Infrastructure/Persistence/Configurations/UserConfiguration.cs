@@ -10,41 +10,27 @@ public class UserConfiguration : IAirQualityControlSchemaEntityTypeConfiguration
     {
         _ = builder.ToTable("user", "dbo")
             .HasKey(user => user.UserId);
-
-        _ = builder.HasOne(user => user.Role)
-            .WithMany()
-            .HasForeignKey(user => user.RoleId);
-
+        
         _ = builder.Property(user => user.UserId)
-            .HasColumnName("user_id")
-            .IsRequired();
+            .HasColumnName("user_id");
+        
+        _ = builder.Property(user => user.Name)
+            .HasColumnName("name").HasMaxLength(50).IsRequired();
+        
+        _ = builder.Property(user => user.Password)
+            .HasColumnName("password").HasMaxLength(50).IsRequired();
+        
+        _ = builder.Property(user => user.Email)
+            .HasColumnName("email").HasMaxLength(50).IsRequired();
+        
         _ = builder
-            .Property(user => user.Name)
-            .HasColumnName("name")
-            .HasMaxLength(50)
-            .IsRequired();
-        _ = builder
-            .Property(user => user.Password)
-            .HasColumnName("password")
-            .HasMaxLength(50)
-            .IsRequired();
-        _ = builder
-            .Property(user => user.Email)
-            .HasColumnName("email")
-            .HasMaxLength(50)
-            .IsRequired();
-        _ = builder
-            .Property(user => user.RoleId)
-            .HasColumnName("role_id")
-            .IsRequired();
-        _ = builder
-            .Property(user => user.IsActive)
-            .HasColumnName("is_active")
-            .IsRequired();
-        _ = builder
-            .Property(user => user.Phone)
-            .HasColumnName("phone")
-            .HasMaxLength(50)
-            .IsRequired();
+            .Property(role => role.RoleId)
+            .HasColumnName("role_id");
+        
+        _ = builder.Property(user => user.IsActive)
+            .HasColumnName("is_active");
+        
+        _ = builder.Property(user => user.Phone)
+            .HasColumnName("phone").HasMaxLength(50).IsRequired();
     }
 }

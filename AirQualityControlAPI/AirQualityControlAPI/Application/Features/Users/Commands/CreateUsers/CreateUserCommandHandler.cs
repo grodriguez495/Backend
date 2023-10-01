@@ -26,7 +26,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand,bool>
                  hash = BitConverter.ToString(hashBytes).Replace("-", string.Empty);
             }
             
-            var entity = User.NewUser(request.Name, hash, request.Email, request.RoleId, true,
+            var entity = User.NewUser(request.Name, hash, request.RoleId,request.Email,  true,
                 request.Phone);
 
             var entityCreated = await _userCommandRepository.RegisterAsync(entity, cancellationToken);

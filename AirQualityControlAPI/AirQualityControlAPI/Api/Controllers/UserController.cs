@@ -3,6 +3,7 @@ using AirQualityControlAPI.Application.Features.Roles.Commands.DeleteRoles;
 using AirQualityControlAPI.Application.Features.Roles.Queries.GetRoles;
 using AirQualityControlAPI.Application.Features.Users;
 using AirQualityControlAPI.Application.Features.Users.Commands.CreateUsers;
+using AirQualityControlAPI.Application.Features.Users.Commands.DeleteUsers;
 using AirQualityControlAPI.Application.Features.Users.Commands.UpdateUsers;
 using AirQualityControlAPI.Application.Features.Users.Queries.GetUser;
 using AirQualityControlAPI.Application.Features.Users.Queries.GetUsers;
@@ -55,7 +56,6 @@ public class UserController : BaseController
     {
         try
         {
-            command.RoleId = id;
             return await _mediator.Send(command);
         }
         catch (Exception ex)
@@ -66,6 +66,6 @@ public class UserController : BaseController
     }
     [HttpDelete("{id:required}")]
     public async Task<ActionResult<bool>> Delete(int id) =>
-        await _mediator.Send(new DeleteRoleCommand { Id = id });
+        await _mediator.Send(new DeleteUserCommand() { Id = id });
 
 }

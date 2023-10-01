@@ -4,7 +4,7 @@ namespace AirQualityControlAPI.Application.Features.Users.Queries.GetUser;
 
 public class GetUserQuery : IRequest<UserDto>
 {
-    public int UserId { get; set; }
+    public int UserId { get; }
 
     public GetUserQuery(int userId)
     {

@@ -1,6 +1,8 @@
 ﻿using AirQualityControlAPI.Domain.Repositories.Roles;
 using AirQualityControlAPI.Domain.Repositories.Roles.Commands;
 using AirQualityControlAPI.Domain.Repositories.Roles.Queries;
+using AirQualityControlAPI.Domain.Repositories.Users.Commands;
+using AirQualityControlAPI.Domain.Repositories.Users.Queries;
 using AirQualityControlAPI.Infrastructure.Contexts;
 using AirQualityControlAPI.Infrastructure.Persistence.Contexts;
 using AirQualityControlAPI.Infrastructure.Repositories;
@@ -23,6 +25,11 @@ public static class PersistenceContainer
         builder.RegisterType<RoleRepository>()
             .As<IRoleQueryRepository>()
             .As<IRoleCommandRepository>()
+            .InstancePerLifetimeScope();
+
+        builder.RegisterType<UserRepository>()
+            .As<IUserQueryRepository>()
+            .As<IUserCommandRepository>()
             .InstancePerLifetimeScope();
     }
 

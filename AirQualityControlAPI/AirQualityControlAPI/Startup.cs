@@ -44,49 +44,12 @@ namespace AirQualityControlAPI
             {
                 options.AddPolicy("CorsPolicy",
                     builder => builder
-                    .WithOrigins("http://localhost:4200", "http://localhost:82")
+                    .WithOrigins("http://localhost:3000")
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials());
             });
-            #region codigo comentado
-
-            /* services.AddDbContext<AirQualityControlDbContext>(options =>
-                options.UseSqlServer(connectionString));*/
            
-            //var _dbcontext = services.BuildServiceProvider().GetService<AirQualityControlDbContext>();
-
-           
-
-            //services.AddSingleton<IRefreshTokenGenerator>(provider => new RefreshTokenGenerator(_dbcontext));
-
-            /*  var _jwtsetting = Configuration.GetSection("JWTSetting");
-              services.Configure<JWTSetting>(_jwtsetting);*/
-
-            //var authkey = Configuration.GetValue<string>("JWTSetting:securitykey");
-
-            /* services.AddAuthentication(item =>
-             {
-                 item.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                 item.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-             }).AddJwtBearer(item =>
-             {
-
-                 item.RequireHttpsMetadata = true;
-                 item.SaveToken = true;
-                 item.TokenValidationParameters = new TokenValidationParameters()
-                 {
-                     ValidateIssuerSigningKey = true,
-                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authkey)),
-                     ValidateIssuer = false,
-                     ValidateAudience = false,
-                     ValidateLifetime = true,
-                     ClockSkew = TimeSpan.Zero
-                 };
-             });*/
-
-
-            #endregion
         }
 
         public void ConfigureContainer(ContainerBuilder builder) 

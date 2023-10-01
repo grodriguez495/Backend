@@ -12,7 +12,6 @@ namespace AirQualityControlAPI.Infrastructure.Repositories
         where TEntity : BaseEntity<TKey>
         where TDBContext : IBaseDbContext
     {
-        //TODO: configurar _dbcontext
         protected TDBContext _dbContext;
         public BaseRepository(TDBContext dBContext)
         {

@@ -8,8 +8,9 @@ public partial class Role : BaseEntity<int>
     public int RoleId { get; set; }
 
     public string Name { get; set; }
+    
 
-    public virtual List<User> Users { get; set; }
+   // public virtual List<User> Users { get; set; }
 
     public override int GetIdentity() => RoleId;
 

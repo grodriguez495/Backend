@@ -14,7 +14,7 @@ public partial class User  : BaseEntity<int>
 
     public string Email { get; set; }
 
-    public int RoleId { get; set; }
+   public int RoleId { get; set; }
 
     public bool IsActive { get; set; }
 
@@ -24,7 +24,7 @@ public partial class User  : BaseEntity<int>
 
     public override int GetIdentity() => UserId;
 
-    public User(int userId,string name, string password, string email, int roleId, bool isActive, string phone)
+    public User(int userId,string name, string password,int roleId, string email, bool isActive, string phone)
     {
         UserId = userId;
         Name = name;
@@ -35,9 +35,9 @@ public partial class User  : BaseEntity<int>
         Phone = phone;
     }
 
-    public static User NewUser(string name, string password, string email, int roleId, bool isActive, string phone)
+    public static User NewUser(string name, string password,int roleId, string email,  bool isActive, string phone)
     {
-        var entity = new User(0, name, password, email, roleId, isActive, phone);
+        var entity = new User(0, name, password,roleId, email, isActive, phone);
         return entity;
     }
 }

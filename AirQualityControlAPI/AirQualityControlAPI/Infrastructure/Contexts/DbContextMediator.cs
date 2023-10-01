@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using AirQualityControlAPI.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace AirQualityControlAPI.Infrastructure.Contexts;
@@ -9,6 +10,6 @@ public class DbContextMediator: IDbContextMediator
     {
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly(),
             t => t.GetInterfaces().Any(i =>
-                i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>)));
+                i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IAirQualityControlSchemaEntityTypeConfiguration<>)));
     }
 }

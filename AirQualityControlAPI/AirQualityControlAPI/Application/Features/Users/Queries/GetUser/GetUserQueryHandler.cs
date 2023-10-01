@@ -19,7 +19,7 @@ public class GetUserQueryHandler : IRequestHandler<GetUserQuery, UserDto>
     {
         try
         {
-            var user = await _userQueryRepository.FindAsync(request.UserId, false, cancellationToken);
+            var user = await _userQueryRepository.GetActiveUserAsync(x => x.UserId == request.UserId, cancellationToken);
             var userDto = _mapper.Map<UserDto>(user);
             return userDto;
         }

@@ -19,7 +19,7 @@ public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery,List<UserDto>>
     {
         try
         {
-            var entities = await _userQueryRepository.ListAsync(cancellationToken:cancellationToken);
+            var entities = await _userQueryRepository.ListAsync(x => x.IsActive,cancellationToken:cancellationToken);
             var result = _mapper.Map<List<UserDto>>(entities);
             return result;
         }

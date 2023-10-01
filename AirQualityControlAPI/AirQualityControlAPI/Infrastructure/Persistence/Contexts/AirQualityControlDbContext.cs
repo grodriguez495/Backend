@@ -19,9 +19,9 @@ public class AirQualityControlDbContext : BaseDbContext, IAirQualityControlDbCon
 
     public bool ModelCreated { get; set;}
 
-    public void OnModelCreatingFromContext(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-      OnModelCreating(modelBuilder);
+      base.OnModelCreating(modelBuilder);
       _dbContextMediator.ApplyConfigurations(modelBuilder);
     }
 }
