@@ -30,7 +30,7 @@ public class LoginQueryHandler :IRequestHandler<LoginQuery,LoginDto?>
             var user = await _userQueryRepository.ListAsync(x => x.Email == request.Email &&
                                                                       x.Password == hash &&
                                                                       x.IsActive == true, false, cancellationToken);
-           Console.WriteLine($"salio: {user.FirstOrDefault().Name} ");
+         
             return user.Any() ? _mapper.Map<LoginDto>(user.FirstOrDefault()) : null;
         }
         catch (Exception ex)
