@@ -51,12 +51,15 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand,UserDt
 
     private string UpdateMD5(string requestPassword)
     {
-        var hash = string.Empty;
-        using var md5Hash = MD5.Create();
-        var sourceBytes = Encoding.UTF8.GetBytes(requestPassword);
-        var hashBytes = md5Hash.ComputeHash(sourceBytes);
-        hash = BitConverter.ToString(hashBytes).Replace("-", string.Empty);
-
+        string hash = String.Empty;
+        byte[] data = Encoding.UTF8.GetBytes(requestPassword);
+        MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+        TripleDESCryptoServiceProvider tripDES = new TripleDESCryptoServiceProvider();
+        tripDES.Key = md5.ComputeHash(Encoding.UTF8.GetBytes(hash));
+        tripDES.Mode = CipherMode.ECB;
+        ICryptoTransform transform = tripDES.CreateEncryptor();
+        byte[] result = transform.TransformFinalBlock(data, 0, data.Length);
+        hash = Convert.ToBase64String(result);
         return hash;
     }
 }

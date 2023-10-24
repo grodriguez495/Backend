@@ -28,7 +28,7 @@ public class UserRepository :
     public async Task<User> GetActiveUserAsync(Expression<Func<User, bool>> predicate,
         CancellationToken cancellationToken)
     {
-        var query = Entities.Where(x => x.IsActive).AsNoTracking();
+        var query = Entities.AsNoTracking();
         return await query.Where(predicate).FirstOrDefaultAsync(cancellationToken);
     }
 }

@@ -19,12 +19,14 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand,bool>
         try
         {
             var hash = string.Empty;
-            using (var md5Hash = MD5.Create())
-            {
-                var sourceBytes = Encoding.UTF8.GetBytes(request.Password);
-                var hashBytes = md5Hash.ComputeHash(sourceBytes);
-                 hash = BitConverter.ToString(hashBytes).Replace("-", string.Empty);
-            }
+            byte[] data = Encoding.UTF8.GetBytes(request.Password);
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            TripleDESCryptoServiceProvider tripDES = new TripleDESCryptoServiceProvider();
+            tripDES.Key = md5.ComputeHash(Encoding.UTF8.GetBytes(hash));
+            tripDES.Mode = CipherMode.ECB;
+            ICryptoTransform transform = tripDES.CreateEncryptor();
+            byte[] result = transform.TransformFinalBlock(data, 0, data.Length);
+            hash = Convert.ToBase64String(result);
             
             var entity = User.NewUser(request.Name, hash, request.RoleId,request.Email,  true,
                 request.Phone);

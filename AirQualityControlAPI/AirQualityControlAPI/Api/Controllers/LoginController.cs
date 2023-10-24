@@ -1,5 +1,5 @@
 ﻿using AirQualityControlAPI.Application.Features.Logins;
-using AirQualityControlAPI.Application.Features.Logins.Query.LogIns;
+using AirQualityControlAPI.Application.Features.Logins.Commands.LogIns;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,12 +13,12 @@ public class LoginController : BaseController
     }
     
     
-    [HttpGet]
-    public async Task<ActionResult<LoginDto?>> LoginAsync(string email, string password)
+    [HttpPost]
+    public async Task<ActionResult<LoginDto?>> LoginAsync(LoginCommand command)
     {
         try
         {
-            return await _mediator.Send(new LoginQuery(email,password));
+            return await _mediator.Send(command);
         }
         catch (Exception ex)
         {

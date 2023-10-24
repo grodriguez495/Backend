@@ -4,29 +4,31 @@ using AirQualityControlAPI.Domain.Repositories.Users.Queries;
 using AutoMapper;
 using MediatR;
 
-namespace AirQualityControlAPI.Application.Features.Logins.Query.LogIns;
+namespace AirQualityControlAPI.Application.Features.Logins.Commands.LogIns;
 
-public class LoginQueryHandler :IRequestHandler<LoginQuery,LoginDto?>
+public class LoginCommandsHandler :IRequestHandler<LoginCommand,LoginDto?>
 {
     private readonly IUserQueryRepository _userQueryRepository;
     private readonly IMapper _mapper;
-    public LoginQueryHandler(IUserQueryRepository userQueryRepository, IMapper mapper)
+    public LoginCommandsHandler(IUserQueryRepository userQueryRepository, IMapper mapper)
     {
         _userQueryRepository = userQueryRepository ?? throw new ArgumentNullException(nameof(userQueryRepository));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
-    public async  Task<LoginDto?> Handle(LoginQuery request, CancellationToken cancellationToken)
+    public async  Task<LoginDto?> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
         try
         {
-            var hash = string.Empty;
-            using (var md5Hash = MD5.Create())
-            {
-                var sourceBytes = Encoding.UTF8.GetBytes(request.Password);
-                var hashBytes = md5Hash.ComputeHash(sourceBytes);
-                hash = BitConverter.ToString(hashBytes).Replace("-", string.Empty);
-            }
+            string hash = String.Empty;
+            byte[] data = Encoding.UTF8.GetBytes(request.Password);
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            TripleDESCryptoServiceProvider tripDES = new TripleDESCryptoServiceProvider();
+            tripDES.Key = md5.ComputeHash(Encoding.UTF8.GetBytes(hash));
+            tripDES.Mode = CipherMode.ECB;
+            ICryptoTransform transform = tripDES.CreateEncryptor();
+            byte[] result = transform.TransformFinalBlock(data, 0, data.Length);
+            hash = Convert.ToBase64String(result);
             var user = await _userQueryRepository.ListAsync(x => x.Email == request.Email &&
                                                                       x.Password == hash &&
                                                                       x.IsActive == true, false, cancellationToken);
