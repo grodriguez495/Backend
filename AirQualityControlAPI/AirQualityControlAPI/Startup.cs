@@ -7,6 +7,9 @@ using AirQualityControlAPI.Infrastructure;
 using Autofac;
 using AirQualityControlAPI.IoC;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
+using Microsoft.Identity.Web;
 
 namespace AirQualityControlAPI
 {
@@ -49,7 +52,16 @@ namespace AirQualityControlAPI
                     .AllowAnyHeader()
                     .AllowCredentials());
             });
-           
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddMicrosoftIdentityWebApi(options =>
+                {
+                    this.Configuration.Bind("AzureAd",options);
+                    options.TokenValidationParameters.NameClaimType = "name";
+                }, options => { this.Configuration.Bind("AzureAd",options);});
+            
+    
+
         }
 
         public void ConfigureContainer(ContainerBuilder builder) 
