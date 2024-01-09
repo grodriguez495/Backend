@@ -8,5 +8,6 @@ namespace AirQualityControlAPI.Infrastructure.Persistence.Contexts
     {
         DbSet<Role> Role { get; }
         DbSet<User> User { get; }
+        DbSet<Sensor> Sensor { get; }
     }
 }
