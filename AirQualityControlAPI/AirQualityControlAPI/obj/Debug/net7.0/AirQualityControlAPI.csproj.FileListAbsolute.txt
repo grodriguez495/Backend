@@ -169,3 +169,6 @@ C:\Users\Gustavo\RiderProjects\Backend\AirQualityControlAPI\AirQualityControlAPI
 C:\Users\Gustavo\RiderProjects\Backend\AirQualityControlAPI\AirQualityControlAPI\obj\Debug\net7.0\AirQualityControlAPI.genruntimeconfig.cache
 C:\Users\Gustavo\RiderProjects\Backend\AirQualityControlAPI\AirQualityControlAPI\obj\Debug\net7.0\ref\AirQualityControlAPI.dll
 C:\Users\Gustavo\RiderProjects\Backend\AirQualityControlAPI\AirQualityControlAPI\bin\Debug\net7.0\Autofac.Extensions.DependencyInjection.dll
+C:\Users\Gustavo\RiderProjects\Backend\AirQualityControlAPI\AirQualityControlAPI\bin\Debug\net7.0\Newtonsoft.Json.dll
+C:\Users\Gustavo\RiderProjects\Backend\AirQualityControlAPI\AirQualityControlAPI\bin\Debug\net7.0\nunit.framework.dll
+C:\Users\Gustavo\RiderProjects\Backend\AirQualityControlAPI\AirQualityControlAPI\bin\Debug\net7.0\Twilio.dll
