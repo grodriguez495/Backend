@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using AirQualityControlAPI.Application.Features.EmailNotifications;
 using AirQualityControlAPI.Domain.Repositories.Roles.Queries;
 using AirQualityControlAPI.Domain.Repositories.Sensors.Queries;
 using AirQualityControlAPI.Domain.Repositories.Users.Queries;
@@ -28,6 +29,7 @@ namespace AirQualityControlAPI.Infrastructure
             _ = services.AddScoped<IRoleQueryRepository, RoleRepository>();
             _ = services.AddScoped<IUserQueryRepository, UserRepository>();
             _ = services.AddScoped<ISensorQueryRepository, SensorRepository>();
+            _ = services.AddScoped<ISendNotification, SendNotification>();
             _ = services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             return services;

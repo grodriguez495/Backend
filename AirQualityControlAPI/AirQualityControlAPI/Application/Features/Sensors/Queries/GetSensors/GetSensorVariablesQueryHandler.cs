@@ -23,8 +23,8 @@ public class GetSensorVariablesQueryHandler : IRequestHandler<GetSensorVariables
             var result = _mapper.Map<List<SensorDto>>(entities);
             foreach (var eachResult in result)
             {
-                var algo = Enum.GetName(typeof(VariableEnum), eachResult.VariableId);
-                eachResult.VariableName = algo;
+                var name = Enum.GetName(typeof(VariableEnum), eachResult.VariableId);
+                eachResult.VariableName = name;
             }
             return result;
         }

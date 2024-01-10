@@ -26,8 +26,8 @@ public class GetSensorByDateAndVariableQueryHandler : IRequestHandler<GetSensorB
             var result = _mapper.Map<List<SensorDto>>(entities);
             foreach (var eachResult in result)
             {
-                var algo = Enum.GetName(typeof(VariableEnum), eachResult.VariableId);
-                eachResult.VariableName = algo;
+                var variableName = Enum.GetName(typeof(VariableEnum), eachResult.VariableId);
+                eachResult.VariableName = variableName;
             }
             return result;
         }
