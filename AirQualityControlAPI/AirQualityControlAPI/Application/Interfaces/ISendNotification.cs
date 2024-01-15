@@ -4,6 +4,6 @@ namespace AirQualityControlAPI.Application.Interfaces;
 
 public interface ISendNotification
 {
-    void SendEmailNotificationAsync(List<VariableValue> variableValues);
-    void SendSmsNotificationAsync(List<VariableValue> variableValues);
+    Task  SendEmailNotificationAsync(VariableValue variableValues,CancellationToken cancellationToken);
+    Task  SendSmsNotificationAsync(VariableValue variableValues,CancellationToken cancellationToken);
 }
