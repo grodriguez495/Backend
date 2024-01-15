@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using AirQualityControlAPI.Application.Interfaces;
 using AirQualityControlAPI.Domain.Enums;
 using AirQualityControlAPI.Domain.Models;
 using AirQualityControlAPI.Domain.Repositories.Sensors.Commands;
@@ -10,11 +11,14 @@ namespace AirQualityControlAPI.Application.Features.Sensors.Commands;
 public class UploadJsonSensorCommandHandler : IRequestHandler<UploadJsonSensorCommand, bool>
 {
     private readonly ISensorCommandRepository _sensorCommandRepository;
+    private readonly ISendNotification _notification;
 
-    public UploadJsonSensorCommandHandler(ISensorCommandRepository sensorCommandRepository)
+
+    public UploadJsonSensorCommandHandler(ISensorCommandRepository sensorCommandRepository, ISendNotification notification)
     {
         _sensorCommandRepository =
             sensorCommandRepository ?? throw new ArgumentNullException(nameof(sensorCommandRepository));
+        _notification = notification ?? throw new ArgumentNullException(nameof(notification));
     }
 
     public async Task<bool> Handle(UploadJsonSensorCommand request, CancellationToken cancellationToken)
@@ -22,8 +26,7 @@ public class UploadJsonSensorCommandHandler : IRequestHandler<UploadJsonSensorCo
         try
         {
             var sensorVariable = new Sensor();
-
-
+            
             var inputFile = await ReadAsStringAsync(request.PostedFile);
 
             inputFile = CleanInput(inputFile);
@@ -37,29 +40,72 @@ public class UploadJsonSensorCommandHandler : IRequestHandler<UploadJsonSensorCo
                 records.RemoveAt(0);
             }
 
-           
+
             foreach (var eachRecord in records)
             {
-                var newRecord =eachRecord.Replace("\"", string.Empty).Trim().Split(":").ToList();
+                var parametrosMediblesList = new List<string>()
+                {
+                    SensorProperties.Pm25,
+                    SensorProperties.Pm10,
+                    SensorProperties.Co2
+                };
+                List<VariableValue> sensorVariableList = new List<VariableValue>();
+                var sensorVariableValue = new VariableValue();
+                var newRecord = eachRecord.Replace("\"", string.Empty).Trim().Split(":").ToList();
+
+                if (parametrosMediblesList.Contains(newRecord[0]))
+                {
+                    var currentValue = float.Parse(newRecord[1].Trim().Replace(".", ","));
+                    if (currentValue >=  SensorClasificationEnum.MinDañinaParaGruposSensibles &&
+                        currentValue <= SensorClasificationEnum.MaxDañinaParaGruposSensibles)
+                    {
+                        sensorVariableValue.Value = currentValue.ToString();
+                        sensorVariableValue.Clasificacion = "Dañina a la salud para grupos sensibles";
+                    }
+
+                    if (currentValue >= SensorClasificationEnum.MinDañinaALaSalud &&
+                        currentValue <= SensorClasificationEnum.MaxDañinaALaSalud)
+                    {
+                        sensorVariableValue.Value = currentValue.ToString();
+                        sensorVariableValue.Clasificacion = "Dañina a la salud";
+                    }
+
+                    if (currentValue >= SensorClasificationEnum.MinMuyDañinaALaSalud &&
+                        currentValue <= SensorClasificationEnum.MaxMuyDañinaALaSalud)
+                    {
+                        sensorVariableValue.Value = currentValue.ToString();
+                        sensorVariableValue.Clasificacion = "Muy dañina a la salud";
+                    }
+
+                    if (currentValue >= SensorClasificationEnum.MinPeligrosaALaSalud &&
+                        currentValue <= SensorClasificationEnum.MaxPeligrosaALaSalud)
+                    {
+                        sensorVariableValue.Value = currentValue.ToString();
+                        sensorVariableValue.Clasificacion = "Peligrosa";
+                    }
+                }
+
                 switch (newRecord[0])
                 {
-
                     case SensorProperties.Pm25:
                     {
                         sensorVariable.VariableId = (int)VariableEnum.Pm25;
                         sensorVariable.Value = newRecord[1].Trim();
+                        sensorVariableValue.VariableName = SensorProperties.Pm25;
                         break;
                     }
                     case SensorProperties.Pm10:
                     {
                         sensorVariable.VariableId = (int)VariableEnum.Pm10;
                         sensorVariable.Value = newRecord[1].Trim();
+                        sensorVariableValue.VariableName = SensorProperties.Pm10;
                         break;
                     }
                     case SensorProperties.Co2:
                     {
                         sensorVariable.VariableId = (int)VariableEnum.Co2;
                         sensorVariable.Value = newRecord[1].Trim();
+                        sensorVariableValue.VariableName = SensorProperties.Co2;
                         break;
                     }
                     case SensorProperties.Humidity:
@@ -75,8 +121,14 @@ public class UploadJsonSensorCommandHandler : IRequestHandler<UploadJsonSensorCo
                         break;
                     }
                 }
+                
 
                 await _sensorCommandRepository.RegisterAsync(sensorVariable, cancellationToken);
+                if (!string.IsNullOrWhiteSpace(sensorVariableValue.Value))
+                {
+                    await _notification.SendEmailNotificationAsync(sensorVariableValue,cancellationToken);
+                    await _notification.SendSmsNotificationAsync(sensorVariableValue,cancellationToken);
+                }
             }
 
             return true;

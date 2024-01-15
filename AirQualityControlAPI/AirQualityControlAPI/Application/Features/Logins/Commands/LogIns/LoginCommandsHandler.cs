@@ -12,12 +12,11 @@ public class LoginCommandsHandler :IRequestHandler<LoginCommand,LoginDto?>
 {
     private readonly IUserQueryRepository _userQueryRepository;
     private readonly IMapper _mapper;
-    private readonly ISendNotification _notification;
-    public LoginCommandsHandler(IUserQueryRepository userQueryRepository, IMapper mapper, ISendNotification notification)
+   
+    public LoginCommandsHandler(IUserQueryRepository userQueryRepository, IMapper mapper)
     {
         _userQueryRepository = userQueryRepository ?? throw new ArgumentNullException(nameof(userQueryRepository));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-        _notification = notification;
     }
 
     public async  Task<LoginDto?> Handle(LoginCommand request, CancellationToken cancellationToken)
@@ -36,8 +35,6 @@ public class LoginCommandsHandler :IRequestHandler<LoginCommand,LoginDto?>
             var user = await _userQueryRepository.ListAsync(x => x.Email == request.Email &&
                                                                       x.Password == hash &&
                                                                       x.IsActive == true, false, cancellationToken);
-         _notification.SendEmailNotificationAsync(new List<VariableValue>());
-         _notification.SendSmsNotificationAsync(new List<VariableValue>());
             return user.Any() ? _mapper.Map<LoginDto>(user.FirstOrDefault()) : null;
         }
         catch (Exception ex)
