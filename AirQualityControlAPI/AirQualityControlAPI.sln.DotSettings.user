@@ -5,5 +5,12 @@
     &lt;TestId&gt;MSTest::B8B98853-DFF8-4044-BE7F-BF41FB080576::net7.0::AirQualityControlUnitTest.Roles.CreateRoleCommandHandlerTest.GivenACommand_CreateNewRole&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;MSTest::B8B98853-DFF8-4044-BE7F-BF41FB080576::net7.0::AirQualityControlUnitTest.Roles.UpdateRoleCommandHandlerTest.GivenAExistingRole_UpdateRole&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;MSTest::B8B98853-DFF8-4044-BE7F-BF41FB080576::net7.0::AirQualityControlUnitTest.Roles.DeleteRoleCommandHandlerTest.GivenExistingRole_DeletRole&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::B8B98853-DFF8-4044-BE7F-BF41FB080576::net7.0::AirQualityControlUnitTest.Roles.GetRoleQueryHandlerTest.GivenARoleId_ReturnRole&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::B8B98853-DFF8-4044-BE7F-BF41FB080576::net7.0::AirQualityControlUnitTest.Roles.GetRolesQueryHandlerTest.GivenARolesIds_ReturnRoleList&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::B8B98853-DFF8-4044-BE7F-BF41FB080576::net7.0::AirQualityControlUnitTest.Users.GetUserQueryHandlerTest.GivenAUserId_ReturnUser&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::B8B98853-DFF8-4044-BE7F-BF41FB080576::net7.0::AirQualityControlUnitTest.Users.GetUsersQueryHandlerTest.GivenAUserId_ReturnUser&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::B8B98853-DFF8-4044-BE7F-BF41FB080576::net7.0::AirQualityControlUnitTest.Users.CreateUserCommandHandlerTest.GivenCreateCommand_CreateNewUser&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::B8B98853-DFF8-4044-BE7F-BF41FB080576::net7.0::AirQualityControlUnitTest.Users.UpdateUserCommandHandlerTest.GivenAExistingUser_UpdateUser&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::B8B98853-DFF8-4044-BE7F-BF41FB080576::net7.0::AirQualityControlUnitTest.Users.DeleteUserCommandHandlerTest.GivenExistingUser_DeleteUser&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
