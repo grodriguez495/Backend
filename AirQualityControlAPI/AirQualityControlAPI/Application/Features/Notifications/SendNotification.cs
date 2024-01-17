@@ -6,6 +6,7 @@ using AirQualityControlAPI.Domain.Models;
 using AirQualityControlAPI.Domain.Repositories.Users.Queries;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
+using Twilio.Types;
 
 namespace AirQualityControlAPI.Application.Features.EmailNotifications;
 
@@ -50,13 +51,19 @@ public class SendNotification : ISendNotification
             var adminPhoneNumbers = admin.Select(x => x).ToList();
             TwilioClient.Init(accountSID, authToken);
 
+
             foreach (var eachPhoneNumber in adminPhoneNumbers)
             {
-                await MessageResource.CreateAsync(
-                    body:  $"La variable {variableValues.VariableName} se encuentra dentro de la clasificación: {variableValues.Clasificacion}. Con el valor ICA: {variableValues.Value} ",
-                    from: new Twilio.Types.PhoneNumber(originPhoneNumber),
-                    to: new Twilio.Types.PhoneNumber(string.Concat("+57", eachPhoneNumber.Phone))
-                );
+                var messageOptions = new CreateMessageOptions(
+                    new PhoneNumber(string.Concat("+57", eachPhoneNumber.Phone)));
+                messageOptions.From = new PhoneNumber(originPhoneNumber);
+
+                messageOptions.Body =
+                    $"La variable {variableValues.VariableName} se encuentra dentro de la clasificación: {variableValues.Clasificacion}. Con el valor ICA: {variableValues.Value} ";
+
+
+                MessageResource.Create(messageOptions);
+               
             }
         }
         catch (Exception ex)
