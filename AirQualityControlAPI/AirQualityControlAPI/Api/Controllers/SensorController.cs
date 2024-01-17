@@ -2,6 +2,7 @@
 using AirQualityControlAPI.Application.Features.Sensors.Queries;
 using AirQualityControlAPI.Application.Features.Sensors.Queries.GetSensorByDateAndVariables;
 using AirQualityControlAPI.Application.Features.Sensors.Queries.GetSensors;
+using AirQualityControlAPI.Application.Features.Sensors.Queries.GetSensorValuesBydatesAndVariables;
 using AirQualityControlAPI.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -57,6 +58,22 @@ public class SensorController : BaseController
         catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
+            return new List<SensorDto>();
+        }
+    }
+
+    [HttpGet("By-dates-and-variable")]
+    public async Task<ActionResult<List<SensorDto>>> GetValueSensorByDatesAndVariableId(int variableId, string dateFrom,
+        string dateTo)
+    {
+        try
+        {
+            return await _mediator.Send(new GetSensorValuesByDatesAndVariablesQuery(dateFrom,dateTo,variableId));
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
             return new List<SensorDto>();
         }
     }
