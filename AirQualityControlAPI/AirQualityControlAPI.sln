@@ -5,6 +5,8 @@ VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirQualityControlAPI", "AirQualityControlAPI\AirQualityControlAPI.csproj", "{0FA818A3-793D-4DD2-AC9B-D843280C02C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirQualityControlUnitTest", "AirQualityControlUnitTest\AirQualityControlUnitTest.csproj", "{B8B98853-DFF8-4044-BE7F-BF41FB080576}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{0FA818A3-793D-4DD2-AC9B-D843280C02C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FA818A3-793D-4DD2-AC9B-D843280C02C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FA818A3-793D-4DD2-AC9B-D843280C02C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8B98853-DFF8-4044-BE7F-BF41FB080576}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8B98853-DFF8-4044-BE7F-BF41FB080576}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8B98853-DFF8-4044-BE7F-BF41FB080576}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8B98853-DFF8-4044-BE7F-BF41FB080576}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

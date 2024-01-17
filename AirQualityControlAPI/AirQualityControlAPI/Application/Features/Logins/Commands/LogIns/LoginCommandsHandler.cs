@@ -35,7 +35,10 @@ public class LoginCommandsHandler :IRequestHandler<LoginCommand,LoginDto?>
             var user = await _userQueryRepository.ListAsync(x => x.Email == request.Email &&
                                                                       x.Password == hash &&
                                                                       x.IsActive == true, false, cancellationToken);
-            return user.Any() ? _mapper.Map<LoginDto>(user.FirstOrDefault()) : null;
+            var resultUser = user.ToList();
+            return resultUser.Any() ?
+                _mapper.Map<LoginDto>(resultUser.First()) : 
+                null;
         }
         catch (Exception ex)
         {
