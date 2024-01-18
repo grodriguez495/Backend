@@ -1,16 +1,9 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=09308a0b_002De442_002D4d70_002D8790_002Dd785e3d35724/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GivenaUser_WhenTryLogin_AllowLogin" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Project Location="C:\Users\Gustavo\RiderProjects\Backend\AirQualityControlAPI\AirQualityControlUnitTest" Presentation="&amp;lt;AirQualityControlUnitTest&amp;gt;" /&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2351490a_002D432c_002D4a0b_002Da4b3_002D75000dc6562e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GivenSensorUploadRequest_ReturnSensorList" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;MSTest::B8B98853-DFF8-4044-BE7F-BF41FB080576::net7.0::AirQualityControlUnitTest.Logins.LoginCommandsHandlerTest&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;MSTest::B8B98853-DFF8-4044-BE7F-BF41FB080576::net7.0::AirQualityControlUnitTest.Roles.CreateRoleCommandHandlerTest.GivenACommand_CreateNewRole&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;MSTest::B8B98853-DFF8-4044-BE7F-BF41FB080576::net7.0::AirQualityControlUnitTest.Roles.UpdateRoleCommandHandlerTest.GivenAExistingRole_UpdateRole&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;MSTest::B8B98853-DFF8-4044-BE7F-BF41FB080576::net7.0::AirQualityControlUnitTest.Roles.DeleteRoleCommandHandlerTest.GivenExistingRole_DeletRole&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;MSTest::B8B98853-DFF8-4044-BE7F-BF41FB080576::net7.0::AirQualityControlUnitTest.Roles.GetRoleQueryHandlerTest.GivenARoleId_ReturnRole&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;MSTest::B8B98853-DFF8-4044-BE7F-BF41FB080576::net7.0::AirQualityControlUnitTest.Roles.GetRolesQueryHandlerTest.GivenARolesIds_ReturnRoleList&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;MSTest::B8B98853-DFF8-4044-BE7F-BF41FB080576::net7.0::AirQualityControlUnitTest.Users.GetUserQueryHandlerTest.GivenAUserId_ReturnUser&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;MSTest::B8B98853-DFF8-4044-BE7F-BF41FB080576::net7.0::AirQualityControlUnitTest.Users.GetUsersQueryHandlerTest.GivenAUserId_ReturnUser&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;MSTest::B8B98853-DFF8-4044-BE7F-BF41FB080576::net7.0::AirQualityControlUnitTest.Users.CreateUserCommandHandlerTest.GivenCreateCommand_CreateNewUser&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;MSTest::B8B98853-DFF8-4044-BE7F-BF41FB080576::net7.0::AirQualityControlUnitTest.Users.UpdateUserCommandHandlerTest.GivenAExistingUser_UpdateUser&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;MSTest::B8B98853-DFF8-4044-BE7F-BF41FB080576::net7.0::AirQualityControlUnitTest.Users.DeleteUserCommandHandlerTest.GivenExistingUser_DeleteUser&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::B8B98853-DFF8-4044-BE7F-BF41FB080576::net7.0::AirQualityControlUnitTest.Sensors.UploadJsonSensorCommandHandlerTest.GivenSensorUploadRequest_ReturnSensorList&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
