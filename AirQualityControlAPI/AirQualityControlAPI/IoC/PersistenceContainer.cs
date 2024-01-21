@@ -1,4 +1,8 @@
-﻿using AirQualityControlAPI.Domain.Repositories.Roles;
+﻿using AirQualityControlAPI.Domain.Repositories.Alerts.Commands;
+using AirQualityControlAPI.Domain.Repositories.Alerts.Queries;
+using AirQualityControlAPI.Domain.Repositories.AlertTypes.Commands;
+using AirQualityControlAPI.Domain.Repositories.AlertTypes.Queries;
+using AirQualityControlAPI.Domain.Repositories.Roles;
 using AirQualityControlAPI.Domain.Repositories.Roles.Commands;
 using AirQualityControlAPI.Domain.Repositories.Roles.Queries;
 using AirQualityControlAPI.Domain.Repositories.Sensors.Commands;
@@ -37,6 +41,15 @@ public static class PersistenceContainer
         builder.RegisterType<SensorRepository>()
             .As<ISensorQueryRepository>()
             .As<ISensorCommandRepository>()
+            .InstancePerLifetimeScope();
+        builder.RegisterType<AlertsRepository>()
+            .As<IAlertsQueryRepository>()
+            .As<IAlertsCommandRepository>()
+            .InstancePerLifetimeScope();
+        
+        builder.RegisterType<AlertTypeRepository>()
+            .As<IAlertTypesQueryRepository>()
+            .As<IAlertTypesCommandRepository>()
             .InstancePerLifetimeScope();
     }
 

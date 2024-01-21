@@ -1,4 +1,5 @@
 ﻿using AirQualityControlAPI.Application.Features.Sensors.Queries;
+using AirQualityControlAPI.Application.Features.Sensors.Queries.GetSensorIds;
 using AirQualityControlAPI.Domain.Models;
 using AutoMapper;
 

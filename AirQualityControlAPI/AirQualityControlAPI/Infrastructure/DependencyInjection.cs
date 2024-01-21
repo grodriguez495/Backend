@@ -1,13 +1,11 @@
 ﻿using AirQualityControlAPI.Application.Interfaces;
-using AirQualityControlAPI.Domain.Models;
-using AirQualityControlAPI.Domain.Repositories.Roles;
-using AirQualityControlAPI.Infrastructure.Persistence.Mapping;
 using AirQualityControlAPI.Infrastructure.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using AirQualityControlAPI.Application.Features.EmailNotifications;
+using AirQualityControlAPI.Domain.Repositories.Alerts.Queries;
+using AirQualityControlAPI.Domain.Repositories.AlertTypes.Queries;
 using AirQualityControlAPI.Domain.Repositories.Roles.Queries;
 using AirQualityControlAPI.Domain.Repositories.Sensors.Queries;
 using AirQualityControlAPI.Domain.Repositories.Users.Queries;
@@ -30,6 +28,7 @@ namespace AirQualityControlAPI.Infrastructure
             _ = services.AddScoped<IUserQueryRepository, UserRepository>();
             _ = services.AddScoped<ISensorQueryRepository, SensorRepository>();
             _ = services.AddScoped<ISendNotification, SendNotification>();
+            _ = services.AddScoped<IAlertsQueryRepository, AlertsRepository>();
             _ = services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             return services;

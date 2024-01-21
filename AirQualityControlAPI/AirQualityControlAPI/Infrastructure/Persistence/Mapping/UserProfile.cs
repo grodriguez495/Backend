@@ -15,6 +15,7 @@ public class UserProfile : Profile
             .ForMember(dest => dest.Email, options => options.MapFrom(src => src.Email))
             .ForMember(dest => dest.Password, options => options.MapFrom(src => src.Password))
             .ForMember(dest => dest.Phone, options => options.MapFrom(src => src.Phone))
-            .ForMember(dest => dest.IsActive, options => options.MapFrom(src => src.IsActive));
+            .ForMember(dest => dest.IsActive, options => options.MapFrom(src => src.IsActive))
+            .ForMember(dest => dest.RoleName, options =>  options.MapFrom(src => src.Role.Name));
     }
 }

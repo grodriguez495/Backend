@@ -3,6 +3,7 @@ using System.Net.Mail;
 using AirQualityControlAPI.Application.Interfaces;
 using AirQualityControlAPI.Domain.Enums;
 using AirQualityControlAPI.Domain.Models;
+using AirQualityControlAPI.Domain.Repositories.Alerts.Commands;
 using AirQualityControlAPI.Domain.Repositories.Users.Queries;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
@@ -13,10 +14,12 @@ namespace AirQualityControlAPI.Application.Features.EmailNotifications;
 public class SendNotification : ISendNotification
 {
     private readonly IUserQueryRepository _userQueryRepository;
+    private readonly IAlertsCommandRepository _alertsCommandRepository;
 
-    public SendNotification(IUserQueryRepository userQueryRepository)
+    public SendNotification(IUserQueryRepository userQueryRepository, IAlertsCommandRepository alertsCommandRepository)
     {
         _userQueryRepository = userQueryRepository ?? throw new ArgumentNullException(nameof(userQueryRepository));
+        _alertsCommandRepository = alertsCommandRepository ?? throw new ArgumentNullException(nameof(alertsCommandRepository));
     }
 
     public async Task SendEmailNotificationAsync(VariableValue variableValues,CancellationToken cancellationToken)
@@ -36,6 +39,8 @@ public class SendNotification : ISendNotification
             smtpClient.Credentials = new NetworkCredential("airqualitycontrolunab@gmail.com", "jdqeosapjlydkcym");
             smtpClient.EnableSsl = true;
             smtpClient.Send(mailMessage);
+            var alert = AlertNotification.NewAlerts(DateTime.Now, mailMessage.Body, eachEmail, (int)AlertTypeEnum.Email);
+            await _alertsCommandRepository.RegisterAsync(alert, cancellationToken);
         }
     }
 
@@ -54,14 +59,16 @@ public class SendNotification : ISendNotification
 
             foreach (var eachPhoneNumber in adminPhoneNumbers)
             {
+                var completeNumber = string.Concat("+57", eachPhoneNumber.Phone);
                 var messageOptions = new CreateMessageOptions(
-                    new PhoneNumber(string.Concat("+57", eachPhoneNumber.Phone)));
+                    new PhoneNumber(completeNumber));
                 messageOptions.From = new PhoneNumber(originPhoneNumber);
 
                 messageOptions.Body =
                     $"La variable {variableValues.VariableName} se encuentra dentro de la clasificación: {variableValues.Clasificacion}. Con el valor ICA: {variableValues.Value} ";
 
-
+                var alert = AlertNotification.NewAlerts(DateTime.Now, messageOptions.Body, completeNumber, (int)AlertTypeEnum.Sms);
+                await _alertsCommandRepository.RegisterAsync(alert, cancellationToken);
                 MessageResource.Create(messageOptions);
                
             }

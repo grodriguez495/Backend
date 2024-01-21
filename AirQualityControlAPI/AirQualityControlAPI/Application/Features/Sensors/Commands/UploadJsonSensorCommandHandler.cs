@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using AirQualityControlAPI.Application.Interfaces;
 using AirQualityControlAPI.Domain.Enums;
 using AirQualityControlAPI.Domain.Models;
@@ -39,8 +38,6 @@ public class UploadJsonSensorCommandHandler : IRequestHandler<UploadJsonSensorCo
             {
                 records.RemoveAt(0);
             }
-
-
             foreach (var eachRecord in records)
             {
                 var parametrosMediblesList = new List<string>()
@@ -49,8 +46,7 @@ public class UploadJsonSensorCommandHandler : IRequestHandler<UploadJsonSensorCo
                     SensorProperties.Pm10,
                     SensorProperties.Co2
                 };
-                List<VariableValue> sensorVariableList = new List<VariableValue>();
-                var sensorVariableValue = new VariableValue();
+                 var sensorVariableValue = new VariableValue();
                 var newRecord = eachRecord.Replace("\"", string.Empty).Trim().Split(":").ToList();
 
                 if (parametrosMediblesList.Contains(newRecord[0]))

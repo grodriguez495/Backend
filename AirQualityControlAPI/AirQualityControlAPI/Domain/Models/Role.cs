@@ -10,8 +10,7 @@ public partial class Role : BaseEntity<int>
     public string Name { get; set; }
     
 
-   // public virtual List<User> Users { get; set; }
-
+   
     public override int GetIdentity() => RoleId;
 
     public Role (int roleId, string name)
