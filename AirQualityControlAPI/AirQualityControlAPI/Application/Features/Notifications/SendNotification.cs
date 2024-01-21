@@ -9,7 +9,7 @@ using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
 
-namespace AirQualityControlAPI.Application.Features.EmailNotifications;
+namespace AirQualityControlAPI.Application.Features.Notifications;
 
 public class SendNotification : ISendNotification
 {
