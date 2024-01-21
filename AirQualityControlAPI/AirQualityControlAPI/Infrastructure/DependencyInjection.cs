@@ -7,7 +7,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using AirQualityControlAPI.Application.Features.EmailNotifications;
+using AirQualityControlAPI.Application.Features.Notifications;
 using AirQualityControlAPI.Domain.Repositories.Alerts.Queries;
 using AirQualityControlAPI.Domain.Repositories.Roles.Queries;
 using AirQualityControlAPI.Domain.Repositories.Sensors.Queries;
