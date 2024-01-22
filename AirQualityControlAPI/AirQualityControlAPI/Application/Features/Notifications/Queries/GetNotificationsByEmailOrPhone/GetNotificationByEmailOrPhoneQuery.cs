@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace AirQualityControlAPI.Application.Features.Notifications.Queries;
+namespace AirQualityControlAPI.Application.Features.Notifications.Queries.GetNotificationsByEmailOrPhone;
 
 public class GetNotificationByEmailOrPhoneQuery : IRequest<List<NotificationDto>>
 {

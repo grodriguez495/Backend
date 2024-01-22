@@ -2,7 +2,7 @@
 using AirQualityControlAPI.Domain.Repositories.Alerts.Queries;
 using MediatR;
 
-namespace AirQualityControlAPI.Application.Features.Notifications.Queries;
+namespace AirQualityControlAPI.Application.Features.Notifications.Queries.GetNotificationsByEmailOrPhone;
 
 public class GetNotificationByEmailOrPhoneQueryHandler  : IRequestHandler<GetNotificationByEmailOrPhoneQuery, List<NotificationDto>>
 {
