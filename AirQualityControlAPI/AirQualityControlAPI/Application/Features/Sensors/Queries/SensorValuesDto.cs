@@ -2,6 +2,6 @@
 
 public class SensorValuesDto
 {
-    public List<string> Values { get; set; }
+    public double Values { get; set; }
     public string Variable { get; set; }
 }

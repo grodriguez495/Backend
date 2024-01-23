@@ -23,11 +23,11 @@ public class GetValuesBySensorQueryHandler : IRequestHandler<GetValuesBySensorQu
             var algo = DateTime.ParseExact(dateFrom,  "dd-MM-yyyyTHH:mm:ss",CultureInfo.InvariantCulture);
 
             var algoTo =  DateTime.ParseExact(dateTo,  "dd-MM-yyyyTHH:mm:ss",CultureInfo.InvariantCulture);
-            var pm10Values = new List<string>();
-            var co2Values = new List<string>();
-            var humidityValues = new List<string>();
-            var pm25Values = new List<string>();
-            var temperatureValues = new List<string>();
+            var pm10Values = new List<double>();
+            var co2Values = new List<double>();
+            var humidityValues = new List<double>();
+            var pm25Values = new List<double>();
+            var temperatureValues = new List<double>();
             var finalList = new List<SensorValuesDto>();
 
             var sensorValues =
@@ -40,22 +40,26 @@ public class GetValuesBySensorQueryHandler : IRequestHandler<GetValuesBySensorQu
            var groupBy = sensorValuesList.GroupBy(x => x.VariableId);
            foreach (var eachSensorValue in sensorValuesList)
            {
+               NumberFormatInfo provider = new NumberFormatInfo();
+               provider.NumberDecimalSeparator = ".";
+               provider.NumberGroupSeparator = ",";
+               double doubleVal = Convert.ToDouble("855.65", provider);
                switch (eachSensorValue.VariableId)
                {
                    case (int)VariableEnum.Pm10:
-                       pm10Values.Add(eachSensorValue.Value);
+                       pm10Values.Add(Convert.ToDouble(eachSensorValue.Value,provider));
                        break;
                    case (int)VariableEnum.Co2:
-                       co2Values.Add(eachSensorValue.Value);
+                       co2Values.Add(Convert.ToDouble(eachSensorValue.Value,provider));
                        break;
                    case (int)VariableEnum.Humidity:
-                       humidityValues.Add(eachSensorValue.Value);
+                       humidityValues.Add(Convert.ToDouble(eachSensorValue.Value,provider));
                        break;
                    case (int)VariableEnum.Pm25:
-                       pm25Values.Add(eachSensorValue.Value);
+                       pm25Values.Add(Convert.ToDouble(eachSensorValue.Value,provider));
                        break;
                    case (int)VariableEnum.Temperature:
-                       temperatureValues.Add(eachSensorValue.Value);
+                       temperatureValues.Add(Convert.ToDouble(eachSensorValue.Value,provider));
                        break;
                }
            }
@@ -70,39 +74,53 @@ public class GetValuesBySensorQueryHandler : IRequestHandler<GetValuesBySensorQu
         }
     }
 
-    private List<SensorValuesDto> OrganiceData(List<string> pm10Values, List<string> pm25Values, List<string> co2Values,
-        List<string> humidityValues, List<string> temperaturValues, List<SensorValuesDto> sensorValuesDtos)
+    private List<SensorValuesDto> OrganiceData(List<double> pm10Values, List<double> pm25Values, List<double> co2Values,
+        List<double> humidityValues, List<double> temperaturValues, List<SensorValuesDto> sensorValuesDtos)
     {
        sensorValuesDtos.Add(new SensorValuesDto()
        {
-           Values = pm10Values,
+           
+           Values = CalcularPromerio(pm10Values),
            Variable = VariableEnum.Pm10.ToString()
 
        });
        sensorValuesDtos.Add(new SensorValuesDto()
        {
-           Values = pm25Values,
+           Values = CalcularPromerio(pm25Values),
            Variable = VariableEnum.Pm25.ToString()
 
        });
        sensorValuesDtos.Add(new SensorValuesDto()
        {
-           Values = co2Values,
+           Values = CalcularPromerio(co2Values),
            Variable = VariableEnum.Co2.ToString()
 
        });
        sensorValuesDtos.Add(new SensorValuesDto()
        {
-           Values = humidityValues,
+           Values = CalcularPromerio(humidityValues),
            Variable = VariableEnum.Humidity.ToString()
 
        });
        sensorValuesDtos.Add(new SensorValuesDto()
        {
-           Values = temperaturValues,
+           Values = CalcularPromerio(temperaturValues),
            Variable = VariableEnum.Temperature.ToString()
 
        });
        return sensorValuesDtos;
+    }
+
+    private double CalcularPromerio(List<double> listValues)
+    {
+        if (listValues.Count == 0)
+            return 0;
+        double suma = 0;
+        foreach (double numero in listValues)
+        {
+            suma += numero;
+        }
+
+        return (suma / listValues.Count);
     }
 }
