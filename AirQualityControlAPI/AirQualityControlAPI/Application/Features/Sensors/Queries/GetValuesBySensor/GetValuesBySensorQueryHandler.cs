@@ -43,7 +43,6 @@ public class GetValuesBySensorQueryHandler : IRequestHandler<GetValuesBySensorQu
                NumberFormatInfo provider = new NumberFormatInfo();
                provider.NumberDecimalSeparator = ".";
                provider.NumberGroupSeparator = ",";
-               double doubleVal = Convert.ToDouble("855.65", provider);
                switch (eachSensorValue.VariableId)
                {
                    case (int)VariableEnum.Pm10:
