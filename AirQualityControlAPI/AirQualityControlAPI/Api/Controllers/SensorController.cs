@@ -1,6 +1,7 @@
 ﻿using AirQualityControlAPI.Application.Features.Sensors.Commands;
 using AirQualityControlAPI.Application.Features.Sensors.Queries;
 using AirQualityControlAPI.Application.Features.Sensors.Queries.GetSensorByDateAndVariables;
+using AirQualityControlAPI.Application.Features.Sensors.Queries.GetSensorGeographicInformations;
 using AirQualityControlAPI.Application.Features.Sensors.Queries.GetSensorIds;
 using AirQualityControlAPI.Application.Features.Sensors.Queries.GetSensors;
 using AirQualityControlAPI.Application.Features.Sensors.Queries.GetSensorValuesBydatesAndVariables;
@@ -105,4 +106,18 @@ public class SensorController : BaseController
             return new List<string>();
         }
     }
+    [HttpGet("Sensor-geographic-information")]
+    public async Task<ActionResult<List<SensorGeographicInformationDto>>> GetSensorGeographicInformation()
+    {
+        try
+        {
+            return await _mediator.Send(new GetSensorGeographicInformationQuery());
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            return new List<SensorGeographicInformationDto>();
+        }
+    }
+    
 }
