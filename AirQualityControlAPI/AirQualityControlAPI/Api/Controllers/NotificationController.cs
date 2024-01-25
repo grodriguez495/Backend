@@ -4,6 +4,7 @@ using AirQualityControlAPI.Application.Features.Notifications.Commands.Delete;
 using AirQualityControlAPI.Application.Features.Notifications.Queries;
 using AirQualityControlAPI.Application.Features.Notifications.Queries.GetActiveNotifications;
 using AirQualityControlAPI.Application.Features.Notifications.Queries.GetNotificationsByEmailOrPhone;
+using AirQualityControlAPI.Application.Features.Notifications.Queries.GetNotificationsByEmailOrPhonePerDay;
 using AirQualityControlAPI.Application.Features.Users.Commands.DeleteUsers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -50,4 +51,18 @@ public class NotificationController : BaseController
     public async Task<ActionResult<bool>> Delete(int id) => 
         await _mediator.Send(new DeleteNotificationCommand() { Id = id });
 
+    
+    [HttpGet("Active-notification-per-day")]
+    public async Task<List<NotificationDto>> GetActiveAlertsByEmailOrPhoneNumberPerDay(string email, string phone)
+    {
+        try
+        {
+            return await _mediator.Send(new GetNotificationsByEmailOrPhonePerDayQuery(email, phone));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return new List<NotificationDto>();
+        }
+    }
 }
