@@ -44,7 +44,7 @@ namespace AirQualityControlAPI
             {
                 options.AddPolicy("CorsPolicy",
                     builder => builder
-                    .WithOrigins("http://localhost:3000")
+                    .WithOrigins("http://13.82.90.164:3000")
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials());
