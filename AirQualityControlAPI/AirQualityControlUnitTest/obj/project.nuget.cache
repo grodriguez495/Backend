@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "wpwPiU+SvOXBNSvcRnrSGhsAHnTWdM00xDOiqr68eYWdo2BzXNSE4cS9qxrGTtylkOvemtM+OErstWNTfclVjA==",
+  "dgSpecHash": "u8jXn7WR1QatFpgoihqzX+uJWrGy3LPtB4VYwuhSUhDq30/Uo+VvfMZ8GsvqK2dn47itedm4zHbRbePrwSuAJA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Gustavo\\RiderProjects\\Backend\\AirQualityControlAPI\\AirQualityControlUnitTest\\AirQualityControlUnitTest.csproj",
   "expectedPackageFiles": [
