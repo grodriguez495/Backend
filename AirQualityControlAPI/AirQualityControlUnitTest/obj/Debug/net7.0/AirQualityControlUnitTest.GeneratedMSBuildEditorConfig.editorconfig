@@ -9,3 +9,5 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = AirQualityControlUnitTest
 build_property.ProjectDir = C:\Users\Gustavo\RiderProjects\Backend\AirQualityControlAPI\AirQualityControlUnitTest\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 

@@ -40,14 +40,24 @@ namespace AirQualityControlAPI
                 });
             });
 
-            services.AddCors(options =>
+            /*services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
                     builder => builder
-                    .WithOrigins("http://13.82.90.164:3000")
+                    .WithOrigins("http://0.0.0.0:3000")
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials());
+            });*/
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+                    });
             });
            
         }
@@ -66,7 +76,8 @@ namespace AirQualityControlAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors("CorsPolicy");
+            //app.UseCors("CorsPolicy");
+            app.UseCors("AllowAll");
 
             app.UseStaticFiles();
 
