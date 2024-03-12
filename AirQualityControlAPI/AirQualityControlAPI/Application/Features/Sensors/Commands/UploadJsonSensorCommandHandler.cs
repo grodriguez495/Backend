@@ -12,30 +12,39 @@ public class UploadJsonSensorCommandHandler : IRequestHandler<UploadJsonSensorCo
 {
     private readonly ISensorCommandRepository _sensorCommandRepository;
     private readonly ISendNotification _notification;
+    private readonly ILogger<UploadJsonSensorCommandHandler> _logger;
 
 
-    public UploadJsonSensorCommandHandler(ISensorCommandRepository sensorCommandRepository, ISendNotification notification)
+    public UploadJsonSensorCommandHandler(ISensorCommandRepository sensorCommandRepository,
+        ISendNotification notification, ILogger<UploadJsonSensorCommandHandler> logger)
     {
         _sensorCommandRepository =
             sensorCommandRepository ?? throw new ArgumentNullException(nameof(sensorCommandRepository));
         _notification = notification ?? throw new ArgumentNullException(nameof(notification));
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     public async Task<bool> Handle(UploadJsonSensorCommand request, CancellationToken cancellationToken)
     {
         try
         {
+            _logger.LogInformation("Ingreso a guardar información de sensores");
             var sensorVariable = new Sensor();
-            
+
             var inputFile = await ReadAsStringAsync(request.PostedFile);
 
             inputFile = CleanInput(inputFile);
             List<string> records = inputFile.Trim().Split('\r').ToList();
+            _logger.LogInformation($"Fecha que tomara del sensor: {records[1]}");
             sensorVariable.Timestamp = GetDateTime(records[1]);
+            _logger.LogInformation($"Fecha tomada del sensor: {sensorVariable.Timestamp}");
             sensorVariable.SensorId = GetSensorId(records[0]);
+            _logger.LogInformation($"Id tomada del sensor: {sensorVariable.SensorId}");
             sensorVariable.Latitud = GetLatitud(records[3]);
+            _logger.LogInformation($"Latitud tomada del sensor: {sensorVariable.Latitud}");
             sensorVariable.Longitud = GetLongitud(records[4]);
-            for (int i = 0; i <=6; i++)
+            _logger.LogInformation($"Longitud tomada del sensor: {sensorVariable.Longitud}");
+            for (int i = 0; i <= 6; i++)
             {
                 records.RemoveAt(0);
             }
@@ -56,7 +65,7 @@ public class UploadJsonSensorCommandHandler : IRequestHandler<UploadJsonSensorCo
                 if (parametrosMediblesList.Contains(newRecord[0]))
                 {
                     var currentValue = float.Parse(newRecord[1].Trim().Replace(".", ","));
-                    if (currentValue >=  SensorClasificationEnum.MinDañinaParaGruposSensibles &&
+                    if (currentValue >= SensorClasificationEnum.MinDañinaParaGruposSensibles &&
                         currentValue <= SensorClasificationEnum.MaxDañinaParaGruposSensibles)
                     {
                         sensorVariableValue.Value = currentValue.ToString();
@@ -121,20 +130,22 @@ public class UploadJsonSensorCommandHandler : IRequestHandler<UploadJsonSensorCo
                         break;
                     }
                 }
-                
+
 
                 await _sensorCommandRepository.RegisterAsync(sensorVariable, cancellationToken);
                 if (!string.IsNullOrWhiteSpace(sensorVariableValue.Value))
                 {
-                    await _notification.SendEmailNotificationAsync(sensorVariableValue,cancellationToken);
-                    await _notification.SendSmsNotificationAsync(sensorVariableValue,cancellationToken);
+                    _logger.LogInformation($"Envio de notificaciones");
+                    await _notification.SendEmailNotificationAsync(sensorVariableValue, cancellationToken);
+                    await _notification.SendSmsNotificationAsync(sensorVariableValue, cancellationToken);
                 }
             }
-
+            _logger.LogInformation($"Guardo correctamente la información");
             return true;
         }
         catch (Exception e)
         {
+            _logger.LogError($"se presento el sieguiente error: {e.Message}");
             Console.WriteLine(e);
             return false;
         }
@@ -143,13 +154,13 @@ public class UploadJsonSensorCommandHandler : IRequestHandler<UploadJsonSensorCo
 
     private double GetLongitud(string record)
     {
-      var result= record.Replace("\"", string.Empty).Trim().Split(":").ToList();
-      return double.Parse(result[1].Trim(), System.Globalization.CultureInfo.InvariantCulture);
+        var result = record.Replace("\"", string.Empty).Trim().Split(":").ToList();
+        return double.Parse(result[1].Trim(), System.Globalization.CultureInfo.InvariantCulture);
     }
 
     private double GetLatitud(string record)
     {
-        var result= record.Replace("\"", string.Empty).Trim().Split(":").ToList();
+        var result = record.Replace("\"", string.Empty).Trim().Split(":").ToList();
         return double.Parse(result[1].Trim(), System.Globalization.CultureInfo.InvariantCulture);
     }
 
