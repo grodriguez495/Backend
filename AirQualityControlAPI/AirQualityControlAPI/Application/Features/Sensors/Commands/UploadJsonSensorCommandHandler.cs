@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Text.RegularExpressions;
 using AirQualityControlAPI.Application.Interfaces;
 using AirQualityControlAPI.Domain.Enums;
 using AirQualityControlAPI.Domain.Models;
@@ -34,17 +35,21 @@ public class UploadJsonSensorCommandHandler : IRequestHandler<UploadJsonSensorCo
             var inputFile = await ReadAsStringAsync(request.PostedFile);
 
             inputFile = CleanInput(inputFile);
-            List<string> records = inputFile.Trim().Split('\r').ToList();
-            _logger.LogInformation($"Fecha que tomara del sensor: {records[1]}");
-            sensorVariable.Timestamp = GetDateTime(records[1]);
+            _logger.LogInformation("Ingreso a guardar información de sensores");
+            _logger.LogInformation($"ingreso esta informacion: {inputFile}");
+            List<string> records = SplitJson(inputFile);
+            //List<string> records = inputFile.Trim().Split('\r').ToList();
+            _logger.LogInformation($"lista de records: {records.Count}");
+            _logger.LogDebug($"Fecha que tomara del sensor: {records[2]}");
+            sensorVariable.Timestamp = GetDateTime(records[2]);
             _logger.LogInformation($"Fecha tomada del sensor: {sensorVariable.Timestamp}");
-            sensorVariable.SensorId = GetSensorId(records[0]);
+            sensorVariable.SensorId = GetSensorId(records[1]);
             _logger.LogInformation($"Id tomada del sensor: {sensorVariable.SensorId}");
-            sensorVariable.Latitud = GetLatitud(records[3]);
+            sensorVariable.Latitud = GetLatitud(records[4]);
             _logger.LogInformation($"Latitud tomada del sensor: {sensorVariable.Latitud}");
-            sensorVariable.Longitud = GetLongitud(records[4]);
+            sensorVariable.Longitud = GetLongitud(records[5]);
             _logger.LogInformation($"Longitud tomada del sensor: {sensorVariable.Longitud}");
-            for (int i = 0; i <= 6; i++)
+            for (int i = 0; i <= 7; i++)
             {
                 records.RemoveAt(0);
             }
@@ -152,6 +157,49 @@ public class UploadJsonSensorCommandHandler : IRequestHandler<UploadJsonSensorCo
 
     }
 
+    private List<string> SplitJson(string inputFile)
+    {
+        inputFile = Regex.Replace(inputFile, @"[^\S\r\n]+", "");
+        // Suponiendo que 'json' es tu JSON completo
+        var lines = new List<string>();
+        var currentLine = new StringBuilder();
+        bool insideString = false;
+        int level = 0;
+
+        foreach (char c in inputFile)
+        {
+            if (c == '{' || c == '[')
+            {
+                level++;
+            }
+            else if (c == '}' || c == ']')
+            {
+                level--;
+            }
+
+            if (c == '"')
+            {
+                insideString = !insideString;
+            }
+
+            if (c == '\n' && level == 0 && !insideString)
+            {
+                lines.Add(currentLine.ToString());
+                currentLine.Clear();
+            }
+            else
+            {
+                currentLine.Append(c);
+            }
+        }
+
+        if (currentLine.Length > 0)
+        {
+            lines.Add(currentLine.ToString());
+        }
+        return lines;
+    }
+
     private double GetLongitud(string record)
     {
         var result = record.Replace("\"", string.Empty).Trim().Split(":").ToList();
@@ -172,7 +220,8 @@ public class UploadJsonSensorCommandHandler : IRequestHandler<UploadJsonSensorCo
 
     private DateTime GetDateTime(string record)
     {
-        string splitValue = ": \"";
+         record = record.Replace("\"", "");
+        string splitValue = "p:";
         var splitRecord = record.Trim().Split(splitValue).ToList();
         return DateTime.Parse(splitRecord[1][..^1]);
     }
