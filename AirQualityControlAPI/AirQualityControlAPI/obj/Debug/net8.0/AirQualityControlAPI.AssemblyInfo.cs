@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AirQualityControlAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cd68a3d482d4426320936aff91b3076e4555f944")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5e6cb631f288e7f272b2773ae8ac847f9548e6a1")]
 [assembly: System.Reflection.AssemblyProductAttribute("AirQualityControlAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AirQualityControlAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

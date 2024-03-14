@@ -67,7 +67,9 @@ public class UploadJsonSensorCommandHandler : IRequestHandler<UploadJsonSensorCo
 
                 if (parametrosMediblesList.Contains(newRecord[0]))
                 {
+                    _logger.LogInformation($"la propiedad antes de convertirla, variable:{newRecord[0]}, valor:{newRecord[1]}");
                     var currentValue = float.Parse(newRecord[1].Trim().Replace(".", ","));
+                    _logger.LogInformation($"la propiedad despues de convertirla, variable:{newRecord[0]}, valor:{currentValue}");
                     if (currentValue >= SensorClasificationEnum.MinDañinaParaGruposSensibles &&
                         currentValue <= SensorClasificationEnum.MaxDañinaParaGruposSensibles)
                     {
