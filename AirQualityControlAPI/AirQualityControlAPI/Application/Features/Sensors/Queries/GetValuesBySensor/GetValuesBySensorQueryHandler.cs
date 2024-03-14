@@ -20,8 +20,10 @@ public class GetValuesBySensorQueryHandler : IRequestHandler<GetValuesBySensorQu
     {
         try
         {
-            var dateFrom = new DateTimeOffset(DateTimeOffset.Now.Year, DateTimeOffset.Now.Month, DateTimeOffset.Now.Day, 0, 0, 1,TimeSpan.Zero).ToString("dd-MM-yyyyTHH:mm:ss");
-            var dateTo = new DateTimeOffset(DateTimeOffset.Now.Year, DateTimeOffset.Now.Month, DateTimeOffset.Now.Day, 23, 59, 59,TimeSpan.Zero).ToString("dd-MM-yyyyTHH:mm:ss");
+            var baseDate = DateTimeOffset.Now;
+            var dateFrom = new DateTimeOffset(baseDate.Year, baseDate.Month, baseDate.Day, 0, 0, 1,TimeSpan.Zero).ToString("dd-MM-yyyyTHH:mm:ss");
+            var dateTo = new DateTimeOffset(baseDate.Year, baseDate.Month, baseDate.Day, 23, 59, 59,TimeSpan.Zero).ToString("dd-MM-yyyyTHH:mm:ss");
+
             var filterFrom = DateTimeOffset.ParseExact(dateFrom,  "dd-MM-yyyyTHH:mm:ss",CultureInfo.InvariantCulture);
 
             var filterTo =  DateTimeOffset.ParseExact(dateTo,  "dd-MM-yyyyTHH:mm:ss",CultureInfo.InvariantCulture);
@@ -38,6 +40,7 @@ public class GetValuesBySensorQueryHandler : IRequestHandler<GetValuesBySensorQu
                     , false,
                     cancellationToken);
             _logger.LogInformation($"se encontaron {sensorValues.Count()} datos para el sensor ");
+            _logger.LogInformation($"se deberia buscar entre las fechas {dateFrom} y {dateTo} datos para el sensor ");
             _logger.LogInformation($"sse buscan entre las fechas {filterFrom} y {filterTo} datos para el sensor ");
           
            var sensorValuesList = sensorValues.Where(x=> x.Timestamp >= filterFrom &&
