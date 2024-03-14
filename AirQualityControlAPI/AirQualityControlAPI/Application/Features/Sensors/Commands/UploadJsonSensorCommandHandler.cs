@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 using AirQualityControlAPI.Application.Interfaces;
@@ -68,10 +69,11 @@ public class UploadJsonSensorCommandHandler : IRequestHandler<UploadJsonSensorCo
                 if (parametrosMediblesList.Contains(newRecord[0]))
                 {
                     _logger.LogInformation($"la propiedad antes de convertirla, variable:{newRecord[0]}, valor:{newRecord[1]}");
-                    var currentValue = float.Parse(newRecord[1].Trim().Replace(".", ","));
+                    double currentValue = double.Parse(newRecord[1], NumberStyles.Float,
+                        CultureInfo.InvariantCulture);
                     _logger.LogInformation($"la propiedad despues de convertirla, variable:{newRecord[0]}, valor:{currentValue}");
-                    if (currentValue >= SensorClasificationEnum.MinDañinaParaGruposSensibles &&
-                        currentValue <= SensorClasificationEnum.MaxDañinaParaGruposSensibles)
+                    if ( currentValue >= SensorClasificationEnum.MinDañinaParaGruposSensibles &&
+                         currentValue <= SensorClasificationEnum.MaxDañinaParaGruposSensibles)
                     {
                         sensorVariableValue.Value = currentValue.ToString();
                         sensorVariableValue.Clasificacion = "Dañina a la salud para grupos sensibles";
