@@ -89,8 +89,7 @@ public class UploadJsonSensorCommandHandler : IRequestHandler<UploadJsonSensorCo
                         sensorVariableValue.Clasificacion = "Muy dañina a la salud";
                     }
 
-                    if (currentValue >= SensorClasificationEnum.MinPeligrosaALaSalud &&
-                        currentValue <= SensorClasificationEnum.MaxPeligrosaALaSalud)
+                    if (currentValue >= SensorClasificationEnum.MinPeligrosaALaSalud )
                     {
                         sensorVariableValue.Value = currentValue.ToString();
                         sensorVariableValue.Clasificacion = "Peligrosa";
