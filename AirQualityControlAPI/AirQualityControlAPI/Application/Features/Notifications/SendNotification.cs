@@ -15,15 +15,18 @@ public class SendNotification : ISendNotification
 {
     private readonly IUserQueryRepository _userQueryRepository;
     private readonly IAlertsCommandRepository _alertsCommandRepository;
+    private readonly ILogger<SendNotification> _logger;
 
-    public SendNotification(IUserQueryRepository userQueryRepository, IAlertsCommandRepository alertsCommandRepository)
+    public SendNotification(IUserQueryRepository userQueryRepository, IAlertsCommandRepository alertsCommandRepository,ILogger<SendNotification> logger)
     {
         _userQueryRepository = userQueryRepository ?? throw new ArgumentNullException(nameof(userQueryRepository));
         _alertsCommandRepository = alertsCommandRepository ?? throw new ArgumentNullException(nameof(alertsCommandRepository));
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     public async Task SendEmailNotificationAsync(VariableValue variableValues,CancellationToken cancellationToken)
     {
+        _logger.LogInformation("entro a enviar el correo");
         var admin = await _userQueryRepository.ListAsync(x =>
             x.RoleId == (int)RoleEnum.Admin && x.IsActive,false,cancellationToken);
         var adminEmails = admin.Select(x => x.Email).ToList();
@@ -41,6 +44,7 @@ public class SendNotification : ISendNotification
             smtpClient.Send(mailMessage);
             var alert = AlertNotification.NewAlerts(DateTimeOffset.Now, mailMessage.Body, eachEmail, (int)AlertTypeEnum.Email,false);
             await _alertsCommandRepository.RegisterAsync(alert, cancellationToken);
+            _logger.LogInformation("envio el correo sin problema");
         }
     }
 
@@ -48,9 +52,10 @@ public class SendNotification : ISendNotification
     {
         try
         {
+            _logger.LogInformation("entro a enviar el mensaje Sms");
             var originPhoneNumber = "+12068007332";
             var accountSID = "ACc51aa4ac22ceb49da74fb740c8e67a1f";
-            var authToken = "66bd16d3f17dc4e82a9d8ff7554d70b4";
+            var authToken = "b38929ae10a66758525a25080bd70d29";
             var admin = await _userQueryRepository.ListAsync(x =>
                 x.RoleId == (int)RoleEnum.Admin && x.IsActive,false,cancellationToken);
             var adminPhoneNumbers = admin.Select(x => x).ToList();
@@ -74,6 +79,7 @@ public class SendNotification : ISendNotification
         }
         catch (Exception ex)
         {
+            _logger.LogError("no se puedo enviar el mensaje");
             Console.WriteLine("error:" +ex.Message);
         }
 
