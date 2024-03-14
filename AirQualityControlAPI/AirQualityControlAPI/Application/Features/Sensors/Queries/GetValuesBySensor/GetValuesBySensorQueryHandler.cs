@@ -20,7 +20,9 @@ public class GetValuesBySensorQueryHandler : IRequestHandler<GetValuesBySensorQu
     {
         try
         {
-            var baseDate = DateTimeOffset.Now;
+            var baseDate = DateTimeOffset.UtcNow;
+            _logger.LogInformation($"fecha base {baseDate} ");
+
             var dateFrom = new DateTimeOffset(baseDate.Year, baseDate.Month, baseDate.Day, 0, 0, 1,TimeSpan.Zero).ToString("dd-MM-yyyyTHH:mm:ss");
             var dateTo = new DateTimeOffset(baseDate.Year, baseDate.Month, baseDate.Day, 23, 59, 59,TimeSpan.Zero).ToString("dd-MM-yyyyTHH:mm:ss");
 
