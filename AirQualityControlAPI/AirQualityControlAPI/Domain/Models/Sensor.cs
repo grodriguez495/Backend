@@ -3,7 +3,7 @@
 public class Sensor : BaseEntity<string>
 {
     public string SensorId { get; set; }
-    public DateTime Timestamp { get; set; }
+    public DateTimeOffset Timestamp { get; set; }
     public double Latitud { get; set; }
     public double Longitud { get; set; }
     public int VariableId { get; set; }
