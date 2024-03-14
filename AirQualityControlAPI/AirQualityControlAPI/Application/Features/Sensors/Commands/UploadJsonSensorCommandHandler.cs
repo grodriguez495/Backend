@@ -38,9 +38,7 @@ public class UploadJsonSensorCommandHandler : IRequestHandler<UploadJsonSensorCo
             _logger.LogInformation("Ingreso a guardar información de sensores");
             _logger.LogInformation($"ingreso esta informacion: {inputFile}");
             List<string> records = SplitJson(inputFile);
-            //List<string> records = inputFile.Trim().Split('\r').ToList();
             _logger.LogInformation($"lista de records: {records.Count}");
-            _logger.LogDebug($"Fecha que tomara del sensor: {records[2]}");
             sensorVariable.Timestamp = GetDateTime(records[2]);
             _logger.LogInformation($"Fecha tomada del sensor: {sensorVariable.Timestamp}");
             sensorVariable.SensorId = GetSensorId(records[1]);
@@ -218,12 +216,12 @@ public class UploadJsonSensorCommandHandler : IRequestHandler<UploadJsonSensorCo
         return splitRecord[1].Trim();
     }
 
-    private DateTime GetDateTime(string record)
+    private DateTimeOffset GetDateTime(string record)
     {
          record = record.Replace("\"", "");
         string splitValue = "p:";
         var splitRecord = record.Trim().Split(splitValue).ToList();
-        return DateTime.Parse(splitRecord[1][..^1]);
+        return DateTimeOffset.Parse(splitRecord[1][..^1]);
     }
 
     private string CleanInput(string inputFile)

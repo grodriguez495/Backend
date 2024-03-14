@@ -8,10 +8,12 @@ namespace AirQualityControlAPI.Application.Features.Sensors.Queries.GetValuesByS
 public class GetValuesBySensorQueryHandler : IRequestHandler<GetValuesBySensorQuery,List<SensorValuesDto>>
 {
     private readonly ISensorQueryRepository _sensorQueryRepository;
+    private readonly ILogger<GetValuesBySensorQueryHandler> _logger;
 
-    public GetValuesBySensorQueryHandler(ISensorQueryRepository sensorQueryRepository)
+    public GetValuesBySensorQueryHandler(ISensorQueryRepository sensorQueryRepository,ILogger<GetValuesBySensorQueryHandler> logger)
     {
         _sensorQueryRepository = sensorQueryRepository ?? throw new ArgumentNullException(nameof(sensorQueryRepository));
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     public async Task<List<SensorValuesDto>> Handle(GetValuesBySensorQuery request, CancellationToken cancellationToken)
@@ -20,9 +22,9 @@ public class GetValuesBySensorQueryHandler : IRequestHandler<GetValuesBySensorQu
         {
             var dateFrom = new DateTimeOffset(DateTimeOffset.Now.Year, DateTimeOffset.Now.Month, DateTimeOffset.Now.Day, 0, 0, 1,TimeSpan.Zero).ToString("dd-MM-yyyyTHH:mm:ss");
             var dateTo = new DateTimeOffset(DateTimeOffset.Now.Year, DateTimeOffset.Now.Month, DateTimeOffset.Now.Day, 23, 59, 59,TimeSpan.Zero).ToString("dd-MM-yyyyTHH:mm:ss");
-            var algo = DateTimeOffset.ParseExact(dateFrom,  "dd-MM-yyyyTHH:mm:ss",CultureInfo.InvariantCulture);
+            var filterFrom = DateTimeOffset.ParseExact(dateFrom,  "dd-MM-yyyyTHH:mm:ss",CultureInfo.InvariantCulture);
 
-            var algoTo =  DateTimeOffset.ParseExact(dateTo,  "dd-MM-yyyyTHH:mm:ss",CultureInfo.InvariantCulture);
+            var filterTo =  DateTimeOffset.ParseExact(dateTo,  "dd-MM-yyyyTHH:mm:ss",CultureInfo.InvariantCulture);
             var pm10Values = new List<double>();
             var co2Values = new List<double>();
             var humidityValues = new List<double>();
@@ -35,8 +37,12 @@ public class GetValuesBySensorQueryHandler : IRequestHandler<GetValuesBySensorQu
                     x.SensorId.Equals(request.Sensor)
                     , false,
                     cancellationToken);
-           var sensorValuesList = sensorValues.Where(x=> x.Timestamp >= algo &&
-                                                                  x.Timestamp <= algoTo ).ToList();
+            _logger.LogInformation($"se encontaron {sensorValues.Count()} datos para el sensor ");
+            _logger.LogInformation($"sse buscan entre las fechas {filterFrom} y {filterTo} datos para el sensor ");
+          
+           var sensorValuesList = sensorValues.Where(x=> x.Timestamp >= filterFrom &&
+                                                                  x.Timestamp <= filterTo ).ToList();
+           _logger.LogInformation($"se encontaron {sensorValuesList.Count()} datos filtrados para el sensor ");
            var groupBy = sensorValuesList.GroupBy(x => x.VariableId);
            foreach (var eachSensorValue in sensorValuesList)
            {

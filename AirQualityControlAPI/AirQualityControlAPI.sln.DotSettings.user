@@ -1,4 +1,9 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=0b0dda62_002D3732_002D4df9_002D956b_002D2dfa3e42ecab/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GivenSensorUploadRequest_ReturnSensorList" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;MSTest::B8B98853-DFF8-4044-BE7F-BF41FB080576::net8.0::AirQualityControlUnitTest.Sensors.UploadJsonSensorCommandHandlerTest.GivenSensorUploadRequest_ReturnSensorList&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7c37650d_002D5192_002D4090_002Dba9b_002Dc8f5e3ce972d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;AirQualityControlUnitTest&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Project Location="C:\Users\Gustavo\RiderProjects\Backend\AirQualityControlAPI\AirQualityControlUnitTest" Presentation="&amp;lt;AirQualityControlUnitTest&amp;gt;" /&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

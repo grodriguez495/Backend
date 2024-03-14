@@ -42,7 +42,7 @@ public class UploadJsonSensorCommandHandlerTest
             It.IsAny<Exception>(),
             (Func<object, Exception, string>)It.IsAny<object>()));
         var json =
-            $"{{\n  \"sensor_id\": \"AQS12\",\n  \"timestamp\": \"2022-01-05T12:00:00Z\",\n  \"location\": {{\n    \"latitude\": 38.7749,\n    \"longitude\": -129.4194\n  }},\n  \"parameters\": {{\n    \"PM2.5\": 20.0,\n    \"PM10\": 41.7,\n    \"CO2\": 25.03,\n    \"temperature\": 15.5,\n    \"humidity\":\u00a07.4\n\u00a0\u00a0}}\n}}";
+            $"{{\n  \"sensor_id\": \"AQS12\",\n  \"timestamp\": \"2024-03-13T09:41:00Z\",\n  \"location\": {{\n    \"latitude\": 38.7749,\n    \"longitude\": -129.4194\n  }},\n  \"parameters\": {{\n    \"PM2.5\": 20.0,\n    \"PM10\": 41.7,\n    \"CO2\": 25.03,\n    \"temperature\": 15.5,\n    \"humidity\":\u00a07.4\n\u00a0\u00a0}}\n}}";
         var command = new UploadJsonSensorCommand()
         {
             PostedFile = new MemoryStream(Encoding.UTF8.GetBytes(json))
