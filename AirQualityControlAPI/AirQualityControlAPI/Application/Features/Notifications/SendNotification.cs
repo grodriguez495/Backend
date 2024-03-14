@@ -39,7 +39,7 @@ public class SendNotification : ISendNotification
             smtpClient.Credentials = new NetworkCredential("airqualitycontrolunab@gmail.com", "jdqeosapjlydkcym");
             smtpClient.EnableSsl = true;
             smtpClient.Send(mailMessage);
-            var alert = AlertNotification.NewAlerts(DateTime.Now, mailMessage.Body, eachEmail, (int)AlertTypeEnum.Email,false);
+            var alert = AlertNotification.NewAlerts(DateTimeOffset.Now, mailMessage.Body, eachEmail, (int)AlertTypeEnum.Email,false);
             await _alertsCommandRepository.RegisterAsync(alert, cancellationToken);
         }
     }

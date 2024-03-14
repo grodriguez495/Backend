@@ -27,11 +27,11 @@ public class GetNotificationsByEmailOrPhonePerDayQueryHandler : IRequestHandler<
             }
 
            
-            var baseDate = DateTime.Now;
-            var dateFrom = new DateTime(baseDate.Year, baseDate.Month, baseDate.Day, 0, 0, 1).ToString("dd-MM-yyyyTHH:mm:ss");
-            var dateTo = new DateTime(baseDate.Year, baseDate.Month, baseDate.Day, 23, 59, 59).ToString("dd-MM-yyyyTHH:mm:ss");
-            var dateFromFinal = DateTime.ParseExact(dateFrom,  "dd-MM-yyyyTHH:mm:ss",CultureInfo.InvariantCulture);
-            var dateToFinal =  DateTime.ParseExact(dateTo,  "dd-MM-yyyyTHH:mm:ss",CultureInfo.InvariantCulture);
+            var baseDate = DateTimeOffset.Now;
+            var dateFrom = new DateTimeOffset(baseDate.Year, baseDate.Month, baseDate.Day, 0, 0, 1,TimeSpan.Zero).ToString("dd-MM-yyyyTHH:mm:ss");
+            var dateTo = new DateTimeOffset(baseDate.Year, baseDate.Month, baseDate.Day, 23, 59, 59,TimeSpan.Zero).ToString("dd-MM-yyyyTHH:mm:ss");
+            var dateFromFinal = DateTimeOffset.ParseExact(dateFrom,  "dd-MM-yyyyTHH:mm:ss",CultureInfo.InvariantCulture);
+            var dateToFinal =  DateTimeOffset.ParseExact(dateTo,  "dd-MM-yyyyTHH:mm:ss",CultureInfo.InvariantCulture);
 
             var result = new List<NotificationDto>();
             var entities = await _alertsQueryRepository.ListAsync(x
