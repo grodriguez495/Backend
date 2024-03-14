@@ -20,7 +20,8 @@ public class GetValuesBySensorQueryHandler : IRequestHandler<GetValuesBySensorQu
     {
         try
         {
-            var baseDate = DateTimeOffset.UtcNow;
+            TimeZoneInfo timeZone = TimeZoneInfo.FindSystemTimeZoneById("SA Pacific Standard Time");
+            var baseDate = TimeZoneInfo.ConvertTime(DateTimeOffset.Now, timeZone);
             _logger.LogInformation($"fecha base {baseDate} ");
 
             var dateFrom = new DateTimeOffset(baseDate.Year, baseDate.Month, baseDate.Day, 0, 0, 1,TimeSpan.Zero).ToString("dd-MM-yyyyTHH:mm:ss");
