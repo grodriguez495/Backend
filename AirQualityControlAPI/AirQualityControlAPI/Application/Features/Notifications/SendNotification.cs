@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Configuration;
+using System.Net;
 using System.Net.Mail;
 using AirQualityControlAPI.Application.Interfaces;
 using AirQualityControlAPI.Domain.Enums;
@@ -16,12 +17,14 @@ public class SendNotification : ISendNotification
     private readonly IUserQueryRepository _userQueryRepository;
     private readonly IAlertsCommandRepository _alertsCommandRepository;
     private readonly ILogger<SendNotification> _logger;
+    private readonly IConfiguration _configuration;
 
-    public SendNotification(IUserQueryRepository userQueryRepository, IAlertsCommandRepository alertsCommandRepository,ILogger<SendNotification> logger)
+    public SendNotification(IUserQueryRepository userQueryRepository, IAlertsCommandRepository alertsCommandRepository,ILogger<SendNotification> logger, IConfiguration configuration)
     {
         _userQueryRepository = userQueryRepository ?? throw new ArgumentNullException(nameof(userQueryRepository));
         _alertsCommandRepository = alertsCommandRepository ?? throw new ArgumentNullException(nameof(alertsCommandRepository));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
     }
 
     public async Task SendEmailNotificationAsync(VariableValue variableValues,CancellationToken cancellationToken)
@@ -55,7 +58,8 @@ public class SendNotification : ISendNotification
             _logger.LogInformation("entro a enviar el mensaje Sms");
             var originPhoneNumber = "+12068007332";
             var accountSID = "ACc51aa4ac22ceb49da74fb740c8e67a1f";
-            var authToken = "b38929ae10a66758525a25080bd70d29";
+            var authToken = _configuration["authToken"];
+            _logger.LogInformation($"*****authToken****{authToken}");
             var admin = await _userQueryRepository.ListAsync(x =>
                 x.RoleId == (int)RoleEnum.Admin && x.IsActive,false,cancellationToken);
             var adminPhoneNumbers = admin.Select(x => x).ToList();

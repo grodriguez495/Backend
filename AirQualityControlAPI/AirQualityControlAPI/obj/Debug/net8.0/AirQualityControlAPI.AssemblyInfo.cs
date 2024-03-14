@@ -10,10 +10,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("6dbe5766-f7bd-4687-9e85-f9dcfe957c6e")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("AirQualityControlAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0774b9b3518eaf1efbf9d80697be57dd9a04f702")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cd68a3d482d4426320936aff91b3076e4555f944")]
 [assembly: System.Reflection.AssemblyProductAttribute("AirQualityControlAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AirQualityControlAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

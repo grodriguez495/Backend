@@ -30,6 +30,7 @@ namespace AirQualityControlAPI
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddOptions();
             
+            
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("api", new OpenApiInfo()
