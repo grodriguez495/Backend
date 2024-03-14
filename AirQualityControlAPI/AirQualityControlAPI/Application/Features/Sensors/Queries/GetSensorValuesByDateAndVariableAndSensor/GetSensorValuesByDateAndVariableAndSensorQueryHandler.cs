@@ -16,12 +16,12 @@ public class GetSensorValuesByDateAndVariableAndSensorQueryHandler : IRequestHan
     public async  Task<List<SensorValuesDto>> Handle(GetSensorValuesByDateAndVariableAndSensorQuery request, CancellationToken cancellationToken)
     {
         var finalList = new List<SensorValuesDto>();
-        var initialFrom = DateTime.Parse(request.DateFrom);
-        var initialTo = DateTime.Parse(request.DateTo);
-        var dateFrom = new DateTime(initialFrom.Year, initialFrom.Month, initialFrom.Day, 0, 0, 1).ToString("dd-MM-yyyyTHH:mm:ss");
-        var dateTo = new DateTime(initialTo.Year, initialTo.Month, initialTo.Day, 23, 59, 59).ToString("dd-MM-yyyyTHH:mm:ss");
-        var dateFromFinal = DateTime.ParseExact(dateFrom,  "dd-MM-yyyyTHH:mm:ss",CultureInfo.InvariantCulture);
-        var dateToFinal =  DateTime.ParseExact(dateTo,  "dd-MM-yyyyTHH:mm:ss",CultureInfo.InvariantCulture);
+        var initialFrom = DateTimeOffset.Parse(request.DateFrom);
+        var initialTo = DateTimeOffset.Parse(request.DateTo);
+        var dateFrom = new DateTimeOffset(initialFrom.Year, initialFrom.Month, initialFrom.Day, 0, 0, 1,TimeSpan.Zero).ToString("dd-MM-yyyyTHH:mm:ss");
+        var dateTo = new DateTimeOffset(initialTo.Year, initialTo.Month, initialTo.Day, 23, 59, 59,TimeSpan.Zero).ToString("dd-MM-yyyyTHH:mm:ss");
+        var dateFromFinal = DateTimeOffset.ParseExact(dateFrom,  "dd-MM-yyyyTHH:mm:ss",CultureInfo.InvariantCulture);
+        var dateToFinal =  DateTimeOffset.ParseExact(dateTo,  "dd-MM-yyyyTHH:mm:ss",CultureInfo.InvariantCulture);
         NumberFormatInfo provider = new NumberFormatInfo();
         provider.NumberDecimalSeparator = ".";
         provider.NumberGroupSeparator = ",";
