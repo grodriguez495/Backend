@@ -4,35 +4,43 @@ using MediatR;
 
 namespace AirQualityControlAPI.Application.Features.Sensors.Queries.GetSensorValuesByDateAndVariableAndSensor;
 
-public class GetSensorValuesByDateAndVariableAndSensorQueryHandler : IRequestHandler<GetSensorValuesByDateAndVariableAndSensorQuery,List<SensorValuesDto>>
+public class
+    GetSensorValuesByDateAndVariableAndSensorQueryHandler : IRequestHandler<
+        GetSensorValuesByDateAndVariableAndSensorQuery, List<SensorValuesDto>>
 {
     private readonly ISensorQueryRepository _sensorQueryRepository;
-    
+
     public GetSensorValuesByDateAndVariableAndSensorQueryHandler(ISensorQueryRepository sensorQueryRepository)
     {
-        _sensorQueryRepository = sensorQueryRepository ?? throw new ArgumentNullException(nameof(sensorQueryRepository));
+        _sensorQueryRepository =
+            sensorQueryRepository ?? throw new ArgumentNullException(nameof(sensorQueryRepository));
     }
 
-    public async  Task<List<SensorValuesDto>> Handle(GetSensorValuesByDateAndVariableAndSensorQuery request, CancellationToken cancellationToken)
+    public async Task<List<SensorValuesDto>> Handle(GetSensorValuesByDateAndVariableAndSensorQuery request,
+        CancellationToken cancellationToken)
     {
         var finalList = new List<SensorValuesDto>();
         var initialFrom = DateTimeOffset.Parse(request.DateFrom);
         var initialTo = DateTimeOffset.Parse(request.DateTo);
-        var dateFrom = new DateTimeOffset(initialFrom.Year, initialFrom.Month, initialFrom.Day, 0, 0, 1,TimeSpan.Zero).ToString("dd-MM-yyyyTHH:mm:ss");
-        var dateTo = new DateTimeOffset(initialTo.Year, initialTo.Month, initialTo.Day, 23, 59, 59,TimeSpan.Zero).ToString("dd-MM-yyyyTHH:mm:ss");
-        var dateFromFinal = DateTimeOffset.ParseExact(dateFrom,  "dd-MM-yyyyTHH:mm:ss",CultureInfo.InvariantCulture);
-        var dateToFinal =  DateTimeOffset.ParseExact(dateTo,  "dd-MM-yyyyTHH:mm:ss",CultureInfo.InvariantCulture);
+        var dateFrom =
+            new DateTimeOffset(initialFrom.Year, initialFrom.Month, initialFrom.Day, 0, 0, 1, TimeSpan.Zero).ToString(
+                "dd-MM-yyyyTHH:mm:ss");
+        var dateTo =
+            new DateTimeOffset(initialTo.Year, initialTo.Month, initialTo.Day, 23, 59, 59, TimeSpan.Zero).ToString(
+                "dd-MM-yyyyTHH:mm:ss");
+        var dateFromFinal = DateTimeOffset.ParseExact(dateFrom, "dd-MM-yyyyTHH:mm:ss", CultureInfo.InvariantCulture);
+        var dateToFinal = DateTimeOffset.ParseExact(dateTo, "dd-MM-yyyyTHH:mm:ss", CultureInfo.InvariantCulture);
         NumberFormatInfo provider = new NumberFormatInfo();
         provider.NumberDecimalSeparator = ".";
         provider.NumberGroupSeparator = ",";
         var sensorValues =
-            await _sensorQueryRepository.ListAsync(x => 
+            await _sensorQueryRepository.ListAsync(x =>
                     x.SensorId.Equals(request.Sensor) &&
                     x.VariableId == request.VariableId
                 , false,
                 cancellationToken);
-        var sensorValuesList = sensorValues.Where(x=> x.Timestamp >= dateFromFinal &&
-                                                      x.Timestamp <= dateToFinal ).ToList();
+        var sensorValuesList = sensorValues.Where(x => x.Timestamp >= dateFromFinal &&
+                                                       x.Timestamp <= dateToFinal).ToList();
 
         if (!sensorValuesList.Any())
             return new List<SensorValuesDto>();
@@ -41,8 +49,9 @@ public class GetSensorValuesByDateAndVariableAndSensorQueryHandler : IRequestHan
         foreach (var eachSensorValue in groupByDate)
         {
             var currentStringValues = eachSensorValue.Select(x => x.Value).ToList();
-            double promedio = GenerarPromedio(currentStringValues.Select(x =>Convert.ToDouble(x,provider)).ToList());
-            var newDto = new SensorValuesDto() { Values = promedio,Variable = eachSensorValue.Key.ToString("dd-MM-yyyy")};
+            double promedio = GenerarPromedio(currentStringValues.Select(x => Convert.ToDouble(x, provider)).ToList());
+            var newDto = new SensorValuesDto()
+                { Values = promedio, Variable = eachSensorValue.Key.ToString("dd-MM-yyyy") };
             finalList.Add(newDto);
         }
 
